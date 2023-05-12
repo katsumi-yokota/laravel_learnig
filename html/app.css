@@ -1,0 +1,4 @@
+/* Windows10の場合の特殊な書き方 */
+@import "~tailwindcss/base";
+@import "~tailwindcss/components";
+@import "~tailwindcss/utilities";
