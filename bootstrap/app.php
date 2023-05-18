@@ -53,6 +53,3 @@ $app->singleton(
 */
 
 return $app;
-
-// public_path()の設定 "/var/www/public"(デフォルト) => "/var/www/html"
-$app->usePublicPath(base_path('html'));
