@@ -18,6 +18,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+// お問合せフォーム
+Route::get('/contact/create','App\Http\Controllers\ContactController@create')->name('contact.create'); // ページを表示
+Route::post('/contact/store','App\Http\Controllers\ContactController@store')->name('contact.store'); // 内容を保存
+Route::get('/contact/index', 'App\Http\Controllers\ContactController@index')->name('contact.index')->middleware('auth'); 
+// 一覧を表示 // ログインユーザーのみアクセス可能
+
+// つぶやき
+Route::resource('/post','App\Http\Controllers\PostController'); 
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
