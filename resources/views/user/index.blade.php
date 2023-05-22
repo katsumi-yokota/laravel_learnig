@@ -12,6 +12,7 @@
         <th>@sortablelink('name', '名前')</th>
         <th>@sortablelink('email', 'Eメール')</th>
         <th>@sortablelink('password', 'パスワード')</th>
+        <th>詳細リンク</th>
       </tr>
     </thead>
     <tbody>
@@ -20,6 +21,7 @@
         <td>{{$user->name}}</td>
         <td>{{$user->email}}</td>
         <td>{{$user->password}}</td>
+        <td><a href="{{ route('user.show', $user->id) }}" class="btn btn-primary">詳細</a></td>
       </tr>
       @endforeach
     </tbody>
