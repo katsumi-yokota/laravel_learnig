@@ -4,8 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\StoreRequest; // フォームリクエスト
-// use App\Http\Requests\User\StoreRequest; // フォームリクエスト
+use App\Http\Requests\User\StoreRequest; // フォームリクエスト
 use Illuminate\Support\Facades\Hash; // ハッシュ化
 
 class UserController extends Controller
@@ -38,32 +37,38 @@ class UserController extends Controller
         $inputs['password'] = Hash::make($inputs['password']); // ハッシュ化
         User::create($inputs);
 
-        $request->session()->flash('add_user', '新規登録が完了しました。'); // フラッシュメッセージ
+        session()->flash('add_user', '新規登録が完了しました。'); // フラッシュメッセージ
         return redirect('/user'); // 一覧ページにリダイレクト
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(User $user)
+    public function show($id)
     {
-        //
+        $user = User::find($id); // 主キー（id）を指定
+        return view('user.show', compact('user')); // compact()関数でshow.blade.phpにデータを渡す
     }
 
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(User $user)
+    public function edit($id)
     {
-        //
+        $user = User::find($id);
+        return view('user.edit', compact('user'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, User $user)
+    public function update(Request $request, $id)
     {
-        //
+        $user = User::find($id);
+        $user->name = $request->name;
+        $user->email = $request->email;
+        $user->save();
+        return redirect('/user'); // 一覧ページにリダイレクト
     }
 
     /**
