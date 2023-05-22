@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\ValidateRequest; // フォームリクエスト
+use App\Http\Requests\StoreRequest; // フォームリクエスト
+// use App\Http\Requests\User\StoreRequest; // フォームリクエスト
 use Illuminate\Support\Facades\Hash; // ハッシュ化
 
 class UserController extends Controller
@@ -13,10 +14,11 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::all();
-        return view('user.index', compact('users'));
+        $sort = $request->sort;
+        $users = User::query()->sortable()->paginate(5);
+        return view('user.index', ['users' => $users, 'sort' => $sort]);
     }
 
     /**
@@ -30,12 +32,14 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(ValidateRequest $request)
+    public function store(StoreRequest $request)
     {
-        $inputs = $request->validated(); // バリデーション済みの全データを取得
+        $inputs = $request->validated(); // バリデーション済み全データ
         $inputs['password'] = Hash::make($inputs['password']); // ハッシュ化
         User::create($inputs);
-        return back();
+
+        $request->session()->flash('add_user', '新規登録が完了しました。'); // フラッシュメッセージ
+        return redirect('/user'); // 一覧ページにリダイレクト
     }
 
     /**
