@@ -21,13 +21,17 @@ Route::get('/', function () {
 // お問合せフォーム
 Route::get('/contact/create','App\Http\Controllers\ContactController@create')->name('contact.create'); // ページを表示
 Route::post('/contact/store','App\Http\Controllers\ContactController@store')->name('contact.store'); // 内容を保存
-Route::get('/contact/index', 'App\Http\Controllers\ContactController@index')->name('contact.index')->middleware('auth'); 
+Route::get('/contact/index', 'App\Http\Controllers\ContactController@index')->middleware('auth')->name('contact.index'); 
 // 一覧を表示 // ログインユーザーのみアクセス可能
 
 // つぶやき
 Route::resource('/post','App\Http\Controllers\PostController'); 
 
-Route::get('/dashboard', function () {
+// ユーザー
+Route::resource('/user', 'App\Http\Controllers\UserController');
+
+Route::get('/dashboard', function () 
+{
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
 
