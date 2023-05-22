@@ -26,3 +26,4 @@
   </table>
 </div>
 @endsection
+{{ $users->appends(request()->query())->links() }}
