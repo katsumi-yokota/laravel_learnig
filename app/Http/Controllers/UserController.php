@@ -61,11 +61,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, $id)
+    public function update(StoreRequest $request, $id) // バリデーション
+    // public function update(Request $request, $id) // バリデーションのテスト
     {
         $user = User::find($id);
         $user->name = $request->name;
         $user->email = $request->email;
+        $user->password = $request->password;
         $user->save();
         return redirect('/user')->with('succeed', '編集が完了しました。');
     }
@@ -75,6 +77,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        //
+        $user->delete(); // 複数削除
+        return redirect('/user')->with('warning', '削除が完了しました。');
     }
 }

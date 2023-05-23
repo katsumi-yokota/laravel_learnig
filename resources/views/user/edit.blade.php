@@ -27,6 +27,10 @@
                     <label for="email">メールアドレス</label>
                     <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}" placeholder="">
                 </div>
+                <div class="form-group mt-3">
+                    <label for="password">パスワード</label>
+                    <input type="password" name="password" class="form-control" id="password" value="{{ $user->password }}" placeholder="">
+                </div>
                 <button type="submit" class="btn btn-success mt-3">編集する</button>
             </form>
         </div>

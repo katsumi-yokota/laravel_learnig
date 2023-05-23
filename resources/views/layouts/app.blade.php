@@ -42,6 +42,11 @@
                         {{ session('succeed') }}
                     </div>
                 @endif
+                @if (session('warning'))
+                    <div class="alert-danger h2 text-center">
+                        {{ session('warning') }}
+                    </div>
+                @endif
                 @yield('content')
             </main>
         </div>
