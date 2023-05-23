@@ -24,7 +24,7 @@
           <form method="post" action="{{ route('user.destroy', $user->id) }}" class="ms-1">
             @csrf
             @method('delete') <!-- 削除用 -->
-            <button type="submit" class="btn btn-danger" onClick="return confirm('本当に削除しますか？');">
+            <button type="submit" class="btn btn-danger" onClick="return confirm('本当に削除しますか？');"> <!-- jsで確認 -->
               削除
             </button>
           </form>
