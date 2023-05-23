@@ -5,8 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreRequest; // フォームリクエスト store
-use App\Http\Requests\User\EditRequest; // フォームリクエスト edit
+use App\Http\Requests\User\UpdateRequest; // フォームリクエスト update
 use Illuminate\Support\Facades\Hash; // ハッシュ化
+use Illuminate\Support\Facades\Route; // ルーティング
 
 class UserController extends Controller
 {
@@ -47,6 +48,7 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id); // 主キー（id）を指定
+        dd($user->id);
         return view('user.show', compact('user')); // compact()関数でshow.blade.phpにデータを渡す
     }
 
@@ -62,14 +64,13 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(EditRequest $request, $id) // バリデーション
+    public function update(UpdateRequest $request, $id) // バリデーション
     {
         $user = User::find($id);
-        $user->name = $request->name;
-        $user->email = $request->email;
-        $user->password = $request->password;
-        $user->save();
-        return redirect('/user')->with('succeed', '編集が完了しました。');
+        $user->fill($request->validated())->save();
+
+        return redirect()->route('user.index')->with('succeed', '編集が完了しました。');
+        // return redirect('/user')->with('succeed', '編集が完了しました。'); // routeで書き換え
     }
 
     /**
@@ -77,8 +78,8 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
-        // $user->destroy(61); // 単体削除。主キーを指定
         $user->delete(); // 複数削除
-        return redirect('/user')->with('warning', '削除が完了しました。');
+        // $user->destroy(61); // 単体削除。主キーを指定
+        return redirect()->route('user.index')->with('warning', '削除が完了しました。');
     }
 }
