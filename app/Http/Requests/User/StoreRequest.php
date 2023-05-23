@@ -21,10 +21,24 @@ class StoreRequest extends FormRequest
      */
     public function rules(): array
     {
-        return [
-            'name' => 'required|max:32',
-            'email' => 'email|required|max:255|unique:users', // uniqueを使用。対象はusersテーブル
-            'password' => 'required', 
+        return 
+        [
+            'name' => 
+            [
+                'required',
+                'max:32',
+            ],
+            'email' => 
+            [
+                'email',
+                'required',
+                'max:255',
+                'unique:users,email', // uniqueを使用。対象はusersテーブル、emailカラム
+            ],
+            'password' => 
+            [
+                'required',
+            ] 
         ];
     }
 }
