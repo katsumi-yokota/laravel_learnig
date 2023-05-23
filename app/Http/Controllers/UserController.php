@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\User\StoreRequest; // フォームリクエスト
+use App\Http\Requests\User\StoreRequest; // フォームリクエスト store
+use App\Http\Requests\User\EditRequest; // フォームリクエスト edit
 use Illuminate\Support\Facades\Hash; // ハッシュ化
 
 class UserController extends Controller
@@ -61,8 +62,7 @@ class UserController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(StoreRequest $request, $id) // バリデーション
-    // public function update(Request $request, $id) // バリデーションのテスト
+    public function update(EditRequest $request, $id) // バリデーション
     {
         $user = User::find($id);
         $user->name = $request->name;
@@ -77,6 +77,7 @@ class UserController extends Controller
      */
     public function destroy(User $user)
     {
+        // $user->destroy(61); // 単体削除。主キーを指定
         $user->delete(); // 複数削除
         return redirect('/user')->with('warning', '削除が完了しました。');
     }
