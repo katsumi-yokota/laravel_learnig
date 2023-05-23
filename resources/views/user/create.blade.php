@@ -10,13 +10,13 @@
 </div>
 @endif
 @if(session('message'))
-<div class="alert alert-success">{{session('message')}}</div>
+<div class="alert alert-success">{{ session('message') }}</div>
 @endif
 <div class="row">
     <div class="col-10 col-md-8 col-lg-6 mx-auto mt-6">
         <div class="card-body">
             <h1 class="mt4  mb-3">ユーザーを追加する</h1>
-            <form method="post" action="{{route('user.store')}}">
+            <form method="post" action="{{ route('user.store') }}">
             @csrf
                 <div class="form-group">
                     <label for="name">ユーザー名</label>

@@ -9,7 +9,7 @@
                 @method('put')
                 <div class="form-group mt-3">
                         <label for="body">つぶやきの内容</label>
-                        <textarea name="body" class="form-control" id="body" cols="30" rows="10" placeholder="ここにつぶやきの内容を書く">{{$post->body}}</textarea>
+                        <textarea name="body" class="form-control" id="body" cols="30" rows="10" placeholder="ここにつぶやきの内容を書く">{{ $post->body }}</textarea>
                 </div>
                 <button type="submit" class="btn btn-success mt-3">編集</button>
             </form>

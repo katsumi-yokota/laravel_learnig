@@ -36,13 +36,12 @@
 
             <!-- Page Content -->
             <main>
-                <!-- 新規ユーザー追加時のメッセージ -->
-                @if (session('add_user'))
+                <!-- メッセージ -->
+                @if (session('succeed'))
                     <div class="alert-success h2 text-center">
-                        {{session('add_user')}}
+                        {{ session('succeed') }}
                     </div>
                 @endif
-                
                 @yield('content')
             </main>
         </div>

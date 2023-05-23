@@ -18,10 +18,10 @@
     <tbody>
       @foreach ($contacts as $contact)
       <tr>
-        <td>{{$contact->title}}</td>
-        <td>{{$contact->name}}</td>
+        <td>{{ $contact->title }}</td>
+        <td>{{ $contact->name }}</td>
         <td>{!! nl2br(e($contact->body)) !!}</td>
-        <td>{{$contact->created_at}}</td>
+        <td>{{ $contact->created_at }}</td>
       </tr>
       @endforeach
     </tbody>

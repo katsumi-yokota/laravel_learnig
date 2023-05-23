@@ -9,10 +9,10 @@
 <body>
     <p>お問い合わせ内容は次のとおりです。</p>
     ーーーー
-    <p>件名：{{$inputs['title']}}</p>
-    <p>お名前：{{$inputs['name']}}</p>
-    <p>お問い合わせ内容：{{$inputs['body']}}</p>
-    <p>メールアドレス：{{$inputs['email']}}</p>
+    <p>件名：{{ $inputs['title'] }}</p>
+    <p>お名前：{{ $inputs['name'] }}</p>
+    <p>お問い合わせ内容：{{ $inputs['body'] }}</p>
+    <p>メールアドレス：{{ $inputs['email'] }}</p>
     ーーーー
     <p>担当者よりご連絡いたしますので、今しばらくお待ちください。</p>
 </body>

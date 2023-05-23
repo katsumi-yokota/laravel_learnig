@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col-md-12 w-75 ms-auto me-auto">
             <div class="card mb-2">
-                <p>{{$post->body}}</p>
+                <p>{{ $post->body }}</p>
             </div>
             <div class="d-flex">       
                 <a href="{{route('post.edit',$post)}}"><button class="btn btn-primary mb-4">編集</button></a>

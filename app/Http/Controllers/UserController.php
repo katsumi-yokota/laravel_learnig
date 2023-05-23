@@ -37,8 +37,7 @@ class UserController extends Controller
         $inputs['password'] = Hash::make($inputs['password']); // ハッシュ化
         User::create($inputs);
 
-        session()->flash('add_user', '新規登録が完了しました。'); // フラッシュメッセージ
-        return redirect('/user'); // 一覧ページにリダイレクト
+        return redirect('/user')->with('succeed', '新規登録が完了しました。');
     }
 
     /**
@@ -68,7 +67,7 @@ class UserController extends Controller
         $user->name = $request->name;
         $user->email = $request->email;
         $user->save();
-        return redirect('/user'); // 一覧ページにリダイレクト
+        return redirect('/user')->with('succeed', '編集が完了しました。');
     }
 
     /**
