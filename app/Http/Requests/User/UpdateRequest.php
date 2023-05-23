@@ -34,7 +34,8 @@ class UpdateRequest extends FormRequest
                 Rule::unique('users','email')->ignore($this->user),
             ],
             'password' => [
-                'nullable', 
+                'nullable',
+                'max:32',
             ]
         ];
     }

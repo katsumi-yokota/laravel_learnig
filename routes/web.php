@@ -29,8 +29,6 @@ Route::resource('/post','App\Http\Controllers\PostController');
 
 // ユーザー
 Route::resource('/user', 'App\Http\Controllers\UserController');
-// Route::resource('/user', 'App\Http\Controllers\UserController'); // idを渡す
-// Route::put('/user/{id}', 'App\Http\Controllers\UserController@update'); // idを渡す
 
 Route::get('/dashboard', function () 
 {

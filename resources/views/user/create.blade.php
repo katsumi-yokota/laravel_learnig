@@ -20,15 +20,15 @@
             @csrf
                 <div class="form-group">
                     <label for="name">ユーザー名</label>
-                    <input type="text" name="name" class="form-control" id="name" value="" placeholder="">
+                    <input type="text" name="name" class="form-control" id="name" value="{{ old('name') }} " placeholder="">
                 </div>
                 <div class="form-group mt-3">
                     <label for="email">メールアドレス</label>
-                    <input type="email" name="email" class="form-control" id="email" value="" placeholder="">
+                    <input type="email" name="email" class="form-control" id="email" value="{{ old('email') }}" placeholder="">
                 </div>
                 <div class="form-group">
                     <label for="password">パスワード</label>
-                    <input type="text" name="password" class="form-control" id="password" value="" placeholder="">
+                    <input type="text" name="password" class="form-control" id="password" value="{{ old('password') }}" placeholder="">
                 </div>
                 <button type="submit" class="btn btn-success mt-3">送信する</button>
             </form>

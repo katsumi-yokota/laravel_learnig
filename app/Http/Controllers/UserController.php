@@ -70,7 +70,6 @@ class UserController extends Controller
         $user->fill($request->validated())->save();
 
         return redirect()->route('user.index')->with('succeed', '編集が完了しました。');
-        // return redirect('/user')->with('succeed', '編集が完了しました。'); // routeで書き換え
     }
 
     /**
@@ -79,7 +78,6 @@ class UserController extends Controller
     public function destroy(User $user)
     {
         $user->delete(); // 複数削除
-        // $user->destroy(61); // 単体削除。主キーを指定
         return redirect()->route('user.index')->with('warning', '削除が完了しました。');
     }
 }
