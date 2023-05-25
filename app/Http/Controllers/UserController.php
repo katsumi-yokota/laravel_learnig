@@ -66,8 +66,15 @@ class UserController extends Controller
      */
     public function update(UpdateRequest $request, $id) // バリデーション
     {
+        $validatedDataAtUpdate = $request->validated();
+
+        if (empty($validatedDataAtUpdate['password'])) 
+        {
+            unset($validatedDataAtUpdate['password']); // パスワードを破棄
+        }
+
         $user = User::find($id);
-        $user->fill($request->validated())->save();
+        $user->fill($validatedDataAtUpdate)->save();
 
         return redirect()->route('user.index')->with('succeed', '編集が完了しました。');
     }
