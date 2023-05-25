@@ -48,7 +48,6 @@ class UserController extends Controller
     public function show($id)
     {
         $user = User::find($id); // 主キー（id）を指定
-        dd($user->id);
         return view('user.show', compact('user')); // compact()関数でshow.blade.phpにデータを渡す
     }
 

@@ -28,17 +28,19 @@ class User extends Authenticatable
         'password',
     ];
 
+    // 論理削除
     protected $dates = [
         'deleted_at'
-    ]; // 論理削除 // deleted_atカラムを日付型として扱う
+    ]; // deleted_atカラムを日付型として扱う
 
+    // ソート
     public $sortable =[
         'name',
         'email',
         'password',
         'created_at',
         'updated_at',
-    ]; // ソート
+    ];
 
     /**
      * The attributes that should be hidden for serialization.
