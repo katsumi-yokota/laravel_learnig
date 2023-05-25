@@ -16,6 +16,25 @@
     <tbody>
       @foreach ($users as $user)
       <tr>
+        <!-- 削除済みの場合 -->
+        @if ($user->trashed())
+        <td>{{ '削除済み ' . $user->name }}</td>
+        <td>{{ $user->email }}</td>
+        <td>{{ $user->password }}</td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td>
+          <form method="post" action="{{ route('user.restore', $user->id) }}">
+            @csrf
+            @method('patch') <!-- 論理削除復元 -->
+            <button type=”submit” class="btn btn-success btn-block">
+              復元
+            </button>
+          </form>
+        </td>
+        <!-- 削除済みでない場合 -->
+        @else
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
         <td>{{ $user->password }}</td>
@@ -30,13 +49,7 @@
             </button>
           </form>
         </td>
-        <td>
-          <form method="post" action="{{ route('user.restore', $user->id) }}">
-            @csrf
-            @method('patch') <!-- 論理削除復元 -->
-            <button type=”submit” class="btn btn-success btn-block">復元</button>
-          </form>
-        </td>
+        @endif
       </tr>
       @endforeach
     </tbody>
