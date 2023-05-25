@@ -30,7 +30,7 @@ class User extends Authenticatable
 
     protected $dates = [
         'deleted_at'
-    ]; // 論理削除
+    ]; // 論理削除 // deleted_atカラムを日付型として扱う
 
     public $sortable =[
         'name',
