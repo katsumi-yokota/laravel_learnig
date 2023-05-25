@@ -75,6 +75,10 @@ class UserController extends Controller
         }
 
         $user = User::find($id);
+        if (isset($validatedDataAtUpdate['password'] ))
+        {
+            $validatedDataAtUpdate['password'] = Hash::make($validatedDataAtUpdate['password']);
+        }
         $user->fill($validatedDataAtUpdate)->save();
 
         return redirect()->route('user.index')->with('succeed', '編集が完了しました。');
