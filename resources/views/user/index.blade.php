@@ -6,9 +6,8 @@
       <tr>
         <th>@sortablelink('name', '名前')</th>
         <th>@sortablelink('email', 'Eメール')</th>
-        <th>@sortablelink('password', 'パスワード')</th>
-        <th>作成日</th>
-        <th>更新日</th>
+        <th>@sortablelink('created_at', '作成日')</th>
+        <th>@sortablelink('updated_at', '更新日')</th>
         <th>詳細</th>
         <th>編集</th>
         <th>削除</th>
@@ -22,10 +21,8 @@
         @if ($user->trashed())
         <td>{{ '削除済み ' . $user->name }}</td>
         <td>{{ $user->email }}</td>
-        <td></td>
         <td>{{ $user->created_at }}</td>
         <td>{{ $user->updated_at }}</td>
-        <td></td>
         <td></td>
         <td></td>
         <td></td>
@@ -42,7 +39,6 @@
         @else
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
-        <td></td>
         <td>{{ $user->created_at }}</td>
         <td>{{ $user->updated_at }}</td>
         <td><a href="{{ route('user.show', $user->id) }}" class="btn btn-secondary">詳細</a></td>
