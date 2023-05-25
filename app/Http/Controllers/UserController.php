@@ -18,7 +18,8 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $sort = $request->sort;
-        $users = User::query()->sortable()->paginate(5);
+        // $users = User::query()->sortable()->paginate(5)->withTrashed();
+        $users = User::query()->sortable()->withTrashed()->paginate(5); // 論理削除されたユーザーも取得、表示
         return view('user.index', ['users' => $users, 'sort' => $sort]);
     }
 
@@ -87,5 +88,12 @@ class UserController extends Controller
     {
         $user->delete(); // 複数削除
         return redirect()->route('user.index')->with('warning', '削除が完了しました。');
+    }
+
+    // 論理削除の復元
+    public function restore(User $user)
+    {
+        User::withTrashed()->where('id', $user->id)->restore();
+        return redirect()->route('user.index')->with('succeed', '復元が完了しました。');
     }
 }

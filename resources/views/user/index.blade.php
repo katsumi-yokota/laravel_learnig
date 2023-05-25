@@ -10,6 +10,7 @@
         <th>詳細</th>
         <th>編集</th>
         <th>削除</th>
+        <th>復元</th>
       </tr>
     </thead>
     <tbody>
@@ -23,10 +24,17 @@
         <td>
           <form method="post" action="{{ route('user.destroy', $user->id) }}" class="ms-1">
             @csrf
-            @method('delete') <!-- 削除用 -->
+            @method('delete') <!-- 削除 -->
             <button type="submit" class="btn btn-warning" onClick="return confirm('本当に削除しますか？');"> <!-- jsで確認 -->
               削除
             </button>
+          </form>
+        </td>
+        <td>
+          <form method="post" action="{{ route('user.restore', $user->id) }}">
+            @csrf
+            @method('patch') <!-- 論理削除復元 -->
+            <button type=”submit” class="btn btn-success btn-block">復元</button>
           </form>
         </td>
       </tr>

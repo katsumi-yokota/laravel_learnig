@@ -28,6 +28,10 @@ class User extends Authenticatable
         'password',
     ];
 
+    protected $dates = [
+        'deleted_at'
+    ]; // 論理削除
+
     public $sortable =[
         'name',
         'email',

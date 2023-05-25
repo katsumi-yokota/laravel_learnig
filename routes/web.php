@@ -29,6 +29,8 @@ Route::resource('/post','App\Http\Controllers\PostController');
 
 // ユーザー
 Route::resource('/user', 'App\Http\Controllers\UserController');
+Route::get('/user/restore/{trashed_user}', 'App\Http\Controllers\UserController@restore')->name('user.restore'); // 論理削除の復元
+Route::patch('/user/restore/{trashed_user}', 'App\Http\Controllers\UserController@restore')->name('user.restore'); // 論理削除の復元
 
 Route::get('/dashboard', function () 
 {
