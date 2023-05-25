@@ -16,7 +16,7 @@
     <tbody>
       @foreach ($users as $user)
       <tr>
-        <!-- 削除済みの場合 -->
+        <!-- 論理削除済み -->
         @if ($user->trashed())
         <td>{{ '削除済み ' . $user->name }}</td>
         <td>{{ $user->email }}</td>
@@ -33,7 +33,7 @@
             </button>
           </form>
         </td>
-        <!-- 削除済みでない場合 -->
+        <!-- 論理削除済みでない -->
         @else
         <td>{{ $user->name }}</td>
         <td>{{ $user->email }}</td>
