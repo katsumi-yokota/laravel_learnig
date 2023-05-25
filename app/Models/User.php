@@ -29,9 +29,9 @@ class User extends Authenticatable
     ];
 
     // 論理削除
-    protected $dates = [
-        'deleted_at'
-    ]; // deleted_atカラムを日付型として扱う
+    // protected $dates = [
+    //     'deleted_at'
+    // ]; // deleted_atカラムを日付型として扱う
 
     // ソート
     public $sortable =[
@@ -40,6 +40,7 @@ class User extends Authenticatable
         'password',
         'created_at',
         'updated_at',
+        'deleted_at',
     ];
 
     /**

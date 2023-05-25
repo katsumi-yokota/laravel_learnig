@@ -8,6 +8,7 @@
         <th>@sortablelink('email', 'Eメール')</th>
         <th>@sortablelink('created_at', '作成日')</th>
         <th>@sortablelink('updated_at', '更新日')</th>
+        <th>@sortablelink('deleted_at', '削除日')</th>
         <th>詳細</th>
         <th>編集</th>
         <th>削除</th>
@@ -23,6 +24,7 @@
         <td>{{ $user->email }}</td>
         <td>{{ $user->created_at }}</td>
         <td>{{ $user->updated_at }}</td>
+        <td>{{ $user->deleted_at }}</td>
         <td></td>
         <td></td>
         <td></td>
@@ -41,6 +43,7 @@
         <td>{{ $user->email }}</td>
         <td>{{ $user->created_at }}</td>
         <td>{{ $user->updated_at }}</td>
+        <td></td>
         <td><a href="{{ route('user.show', $user->id) }}" class="btn btn-secondary">詳細</a></td>
         <td><a href="{{ route('user.edit', $user->id) }}" class="btn btn-primary">編集</a></td>
         <td>
