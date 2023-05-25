@@ -8,9 +8,12 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Kyslik\ColumnSortable\Sortable; // ソート
+use Illuminate\Database\Eloquent\SoftDeletes; // 論理削除
 
 class User extends Authenticatable
 {
+    use SoftDeletes; // 論理削除
+
     use HasApiTokens, HasFactory, Notifiable;
 
     use Sortable; // ソート
