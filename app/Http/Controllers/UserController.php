@@ -68,6 +68,7 @@ class UserController extends Controller
     {
         $validatedDataAtUpdate = $request->validated();
 
+        // パスワードが空の場合はパスワードのみアップデートしない
         if (empty($validatedDataAtUpdate['password'])) 
         {
             unset($validatedDataAtUpdate['password']); // パスワードを破棄
