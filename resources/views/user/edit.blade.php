@@ -29,8 +29,7 @@
                 </div>
                 <div class="form-group mt-3">
                     <label for="password">パスワード</label>
-                    {{-- <input type="text" name="password" class="form-control" id="password" value="{{ old('password') }}" placeholder=""> --}}
-                    <input type="text" name="password" class="form-control" id="password" value="{{ old("password", "$user->password") }}" placeholder="">
+                    <input type="text" name="password" class="form-control" id="password" value="{{ old('password') }}" placeholder="">
                 </div>
                 <button type="submit" class="btn btn-success mt-3">編集する</button>
             </form>

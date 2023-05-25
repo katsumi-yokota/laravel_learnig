@@ -14,7 +14,7 @@ class Handler extends ExceptionHandler
      */
     protected $dontFlash = [
         'current_password',
-        'password',
+        // 'password', // updateでバリデーションに引っかかった場合に入力したパスワードを表示したい
         'password_confirmation',
     ];
 
