@@ -8,6 +8,8 @@ use App\Models\Contact;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
 
+use App\Http\Requests\Contact\StoreRequest; // フォームリクエスト store
+
 class ContactController extends Controller
 {
     public function index(Request $request)
@@ -22,15 +24,9 @@ class ContactController extends Controller
         return view('contact.create');
     }
 
-    public function store(Request $request)
+    public function store(StoreRequest $request)
     {
-        $inputs = request()->validate([
-            'title' => 'required|max:255',
-            'name' => 'required|max:255',
-            'email' => 'required|max:255',
-            'body' => 'required',
-            'file' => 'nullable',
-        ]);
+        $inputs = $request->validated();
 
         // ファイルがアップされている
         if ($request->hasFile('file')) 
