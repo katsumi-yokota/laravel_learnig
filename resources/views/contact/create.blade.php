@@ -24,7 +24,7 @@
                     <label for="title">件名</label>
                     <input type="text" name="title" class="form-control" id="title" value="{{  old('title')  }}" placeholder="Enter Title">
                 </div>
-                <div class="form-group">
+                <div class="form-group mt-3">
                     <label for="name">名前</label>
                     <input type="text" name="name" class="form-control" id="name" value="{{  old('name')  }}" placeholder="Enter Name">
                 </div>
@@ -35,6 +35,10 @@
                 <div class="form-group mt-3">
                     <label for="email">メールアドレス</label>
                     <input type="email" name="email" class="form-control" id="email" value="{{  old('email')  }}" placeholder="email">
+                </div>
+                <div class="form-group mt-3">
+                    <label for="file">ファイル</label>
+                    <input type="file" id="file" name="file" class="form-control">
                 </div>
                 <button type="submit" class="btn btn-success mt-3">送信する</button>
             </form>

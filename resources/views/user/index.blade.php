@@ -1,6 +1,30 @@
 @extends('layouts.app')
 @section('content')
 <div class="container">
+
+  {{-- <form method="GET" action="{{ route('user.index') }}">
+    <input type="search" placeholder="ユーザー名を入力" name="search" value="@if (isset($search)) {{ $search }} @endif">
+    <div>
+        <button type="submit">検索</button>
+        <button>
+            <a href="{{ route('user.index') }}" class="text-white">
+                クリア
+            </a>
+        </button>
+    </div>
+</form>
+
+@foreach($users as $user)
+    <a href="{{ route('user.show', ['id' => $user->id]) }}">
+        {{ $user->name }}
+    </a>
+@endforeach
+
+<div>
+<!-- 下記のようにページネーターを記述するとページネートで次ページに遷移しても、検索結果を保持する -->
+    {{ $institutions->appends(request()->input())->links() }}
+</div> --}}
+
   <table class="table table-striped table-bordered">
     <thead>
       <tr>

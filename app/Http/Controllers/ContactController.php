@@ -28,7 +28,8 @@ class ContactController extends Controller
             'title' => 'required|max:255',
             'name' => 'required|max:255',
             'email' => 'required|max:255',
-            'body' => 'required'
+            'body' => 'required',
+            'file' => 'required',
         ]);
         Contact::create($inputs);
 

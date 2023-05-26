@@ -23,6 +23,7 @@ Route::get('/contact/create','App\Http\Controllers\ContactController@create')->n
 Route::post('/contact/store','App\Http\Controllers\ContactController@store')->name('contact.store'); // 内容を保存
 Route::get('/contact/index', 'App\Http\Controllers\ContactController@index')->middleware('auth')->name('contact.index'); 
 // 一覧を表示 // ログインユーザーのみアクセス可能
+Route::resource('upload', 'App\Http\Controllers\ContactController'::class); // ファイル添付
 
 // つぶやき
 Route::resource('/post','App\Http\Controllers\PostController'); 
@@ -31,6 +32,7 @@ Route::resource('/post','App\Http\Controllers\PostController');
 Route::resource('/user', 'App\Http\Controllers\UserController');
 Route::get('/user/restore/{trashed_user}', 'App\Http\Controllers\UserController@restore')->name('user.restore'); // 論理削除の復元
 Route::patch('/user/restore/{trashed_user}', 'App\Http\Controllers\UserController@restore')->name('user.restore'); // 論理削除の復元
+// Route::get('/', 'App\Http\Controllers\UserController@index')->name('user.index'); // 検索
 
 Route::get('/dashboard', function () 
 {
