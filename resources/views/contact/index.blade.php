@@ -14,6 +14,7 @@
         <th>@sortablelink('body', '内容')</th>
         <th>@sortablelink('created_at', '受付日時')</th>
         <th>@sortablelink('file_name', 'ファイル')</th>
+        <th>ファイルをプレビューする</th>
       </tr>
     </thead>
     <tbody>
@@ -24,6 +25,9 @@
         <td>{!! nl2br(e($contact->body)) !!}</td>
         <td>{{ $contact->created_at }}</td>
         <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
+        @if ($filePath)
+        <td><img src="{{ asset("storage/app/public/file/laravel_learning.png") }}" alt="ファイルのプレビュー"></td>
+        @endif
       </tr>
       @endforeach
     </tbody>

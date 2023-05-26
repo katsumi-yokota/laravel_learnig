@@ -13,11 +13,16 @@ use Illuminate\Support\Facades\Storage; // ファイルダウンロード
 
 class ContactController extends Controller
 {
-    public function index(Request $request)
+    public function index(Request $request, Contact $contact)
     {
         $sort = $request->sort;
         $contacts = Contact::query()->sortable()->paginate(5);
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort]);
+        
+        $fileName = $contact->file_name;
+        // dd($fileName);
+        $filePath = "public/file/$fileName";
+        // dd($fileUrl);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'filePath' => $filePath]);
     }
 
     public function create()
