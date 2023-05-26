@@ -18,7 +18,7 @@
     <div class="col-10 col-md-8 col-lg-6 mx-auto mt-6">
         <div class="card-body">
             <h1 class="mt4  mb-3">お問い合わせ</h1>
-            <form method="post" action="{{  route('contact.store')  }}">
+            <form method="post" action="{{  route('contact.store')  }}" enctype="multipart/form-data">
             @csrf
                 <div class="form-group">
                     <label for="title">件名</label>

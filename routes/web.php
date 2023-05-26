@@ -23,7 +23,7 @@ Route::get('/contact/create','App\Http\Controllers\ContactController@create')->n
 Route::post('/contact/store','App\Http\Controllers\ContactController@store')->name('contact.store'); // 内容を保存
 Route::get('/contact/index', 'App\Http\Controllers\ContactController@index')->middleware('auth')->name('contact.index'); 
 // 一覧を表示 // ログインユーザーのみアクセス可能
-Route::resource('upload', 'App\Http\Controllers\ContactController'::class); // ファイル添付
+Route::post('/contact/create', 'App\Http\Controllers\ContactController@upload')->name('contact.upload'); // ファイル添付
 
 // つぶやき
 Route::resource('/post','App\Http\Controllers\PostController'); 

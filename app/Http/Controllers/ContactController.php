@@ -29,8 +29,17 @@ class ContactController extends Controller
             'name' => 'required|max:255',
             'email' => 'required|max:255',
             'body' => 'required',
-            'file' => 'required',
+            'file' => 'nullable',
         ]);
+
+        // ファイルがアップされている
+        if ($request->hasFile('file')) 
+        {
+            // storage/app/public/fileにオリジナル名で保存
+            $fileName = $request->file('file')->getClientOriginalName();
+            $request->file('file')->storeAs("public/file", $fileName);
+        }
+
         Contact::create($inputs);
 
         Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
