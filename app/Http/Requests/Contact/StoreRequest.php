@@ -39,7 +39,7 @@ class StoreRequest extends FormRequest
                 'required',
             ],
             'file' => [
-                'nullable',
+                'required',
             ],
         ];
     }
