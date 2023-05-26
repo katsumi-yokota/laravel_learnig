@@ -23,7 +23,7 @@
         <td>{{ $contact->name }}</td>
         <td>{!! nl2br(e($contact->body)) !!}</td>
         <td>{{ $contact->created_at }}</td>
-        <td><a href="{{ route('contact.download') }}">{{ $contact->file_name }}</a></td>
+        <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
       </tr>
       @endforeach
     </tbody>
