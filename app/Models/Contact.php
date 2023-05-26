@@ -16,13 +16,17 @@ class Contact extends Model
         'title',
         'name',
         'email',
-        'body'
+        'body',
+        'file_name',
+        'file_path',
     ];
     public $sortable =
     [
         'title',
         'name',
         'email',
-        'body'
+        'body',
+        'file_name',
+        'file_path',
     ];
 }

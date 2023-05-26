@@ -15,13 +15,6 @@ class ContactController extends Controller
 {
     public function index(Request $request)
     {
-        // ファイルダウンロード
-        $filePath = 'public/file/laravel_learning.png';
-        $fileName = 'laravel_learning.png';
-        $mimeType = Storage::mimeType($filePath);
-        $headers = [['Content-Type' => $mimeType]];
-        return Storage::download($filePath, $fileName, $headers);
-
         $sort = $request->sort;
         $contacts = Contact::query()->sortable()->paginate(5);
         return view('contact.index', ['contacts' => $contacts, 'sort' => $sort]);
@@ -36,13 +29,10 @@ class ContactController extends Controller
     {
         $inputs = $request->validated();
 
-        // ファイルがアップされている
-        if ($request->hasFile('file')) 
-        {
-            // storage/app/public/fileにオリジナル名で保存
-            $fileName = $request->file('file')->getClientOriginalName();
-            $request->file('file')->storeAs("public/file", $fileName);
-        }
+        $fileName = $request->file('file')->getClientOriginalName(); // storage/app/public/fileにオリジナル名で保存
+        $request->file('file')->storeAs("public/file", $fileName);
+        $inputs['file_name'] = $fileName;
+        $inputs['file_path'] = "storage/app/public/$fileName";
 
         Contact::create($inputs);
 
@@ -50,5 +40,15 @@ class ContactController extends Controller
         Mail::to($inputs['email'])->send(new ContactForm($inputs));
 
         return back()->with('message','メールを送信したのでご確認ください');
+    }
+
+    public function download(Contact $contact)
+    {
+        // ファイルダウンロード
+        $fileName = $contact->file_name;
+        $filePath = "public/file/$fileName";
+        $mimeType = Storage::mimeType($filePath);
+        $headers = [['Content-Type' => $mimeType]];
+        return Storage::download($filePath, $fileName, $headers);
     }
 }

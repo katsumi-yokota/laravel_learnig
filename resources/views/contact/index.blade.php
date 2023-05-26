@@ -13,6 +13,7 @@
         <th>@sortablelink('name', '名前')</th>
         <th>@sortablelink('body', '内容')</th>
         <th>@sortablelink('created_at', '受付日時')</th>
+        <th>@sortablelink('file_name', 'ファイル')</th>
       </tr>
     </thead>
     <tbody>
@@ -22,6 +23,7 @@
         <td>{{ $contact->name }}</td>
         <td>{!! nl2br(e($contact->body)) !!}</td>
         <td>{{ $contact->created_at }}</td>
+        <td><a href="{{ route('contact.download') }}">{{ $contact->file_name }}</a></td>
       </tr>
       @endforeach
     </tbody>
