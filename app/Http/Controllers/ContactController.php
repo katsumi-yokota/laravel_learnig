@@ -9,11 +9,19 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
 
 use App\Http\Requests\Contact\StoreRequest; // フォームリクエスト store
+use Illuminate\Support\Facades\Storage; // ファイルダウンロード
 
 class ContactController extends Controller
 {
     public function index(Request $request)
     {
+        // ファイルダウンロード
+        $filePath = 'public/file/laravel_learning.png';
+        $fileName = 'laravel_learning.png';
+        $mimeType = Storage::mimeType($filePath);
+        $headers = [['Content-Type' => $mimeType]];
+        return Storage::download($filePath, $fileName, $headers);
+
         $sort = $request->sort;
         $contacts = Contact::query()->sortable()->paginate(5);
         return view('contact.index', ['contacts' => $contacts, 'sort' => $sort]);
