@@ -19,7 +19,6 @@ class ContactController extends Controller
         $sort = $request->sort;
         $contacts = Contact::query()->sortable()->paginate(30);
         
-        $fileName = $contact->file_name;
         return view('contact.index', ['contacts' => $contacts, 'sort' => $sort]);
     }
 
@@ -31,12 +30,12 @@ class ContactController extends Controller
     public function store(StoreRequest $request)
     {
         $inputs = $request->validated();
-
         $fileName = $request->file('file');
         $fileName = Str::random(30); // ランダム
-        $request->file('file')->storeAs("public/contact", $fileName);
+        $request->file('file')->store("public/contact");
         $inputs['file_name'] = $fileName;
-        $inputs['file_path'] = "storage/app/public/$fileName";
+        $inputs['file_path'] = storage_path("app/public/contact/$fileName");
+        // $inputs['file_path'] = storage_path("app/public/$fileName");
 
         Contact::create($inputs);
 
