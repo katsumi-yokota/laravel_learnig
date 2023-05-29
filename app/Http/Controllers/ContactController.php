@@ -10,6 +10,7 @@ use App\Mail\ContactForm;
 
 use App\Http\Requests\Contact\StoreRequest; // フォームリクエスト store
 use Illuminate\Support\Facades\Storage; // ファイルダウンロード
+use Illuminate\Support\Str; // ランダム生成
 
 class ContactController extends Controller
 {
@@ -19,8 +20,7 @@ class ContactController extends Controller
         $contacts = Contact::query()->sortable()->paginate(30);
         
         $fileName = $contact->file_name;
-        $filePath = "app/public/contact/$fileName";
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'fileName' => $fileName, 'filePath' => $filePath]);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort]);
     }
 
     public function create()
@@ -32,7 +32,8 @@ class ContactController extends Controller
     {
         $inputs = $request->validated();
 
-        $fileName = $request->file('file')->getClientOriginalName(); // storage/app/public/contactにオリジナル名で保存
+        $fileName = $request->file('file');
+        $fileName = Str::random(30); // ランダム
         $request->file('file')->storeAs("public/contact", $fileName);
         $inputs['file_name'] = $fileName;
         $inputs['file_path'] = "storage/app/public/$fileName";

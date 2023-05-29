@@ -14,8 +14,8 @@
         <th><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('name', '名前'));?></th>
         <th><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('body', '内容'));?></th>
         <th><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('created_at', '受付日時'));?></th>
-        <th><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('file_name', 'ファイル'));?></th>
-        <th>ファイルをプレビューする</th>
+        <th><?php echo \Kyslik\ColumnSortable\SortableLink::render(array ('file_name', 'ファイルダウンロード'));?></th>
+        <th>ファイルプレビュー</th>
       </tr>
     </thead>
     <tbody>
@@ -25,13 +25,10 @@
         <td><?php echo e($contact->name); ?></td>
         <td><?php echo nl2br(e($contact->body)); ?></td>
         <td><?php echo e($contact->created_at); ?></td>
-        <td><a href="<?php echo e(route('contact.download', $contact->id)); ?>"><?php echo e($fileName); ?></a></td>
+        <td><a href="<?php echo e(route('contact.download', $contact->id)); ?>"><?php echo e($contact->file_name); ?></a></td>
         <?php if(!$contact->file_path): ?>
         <td>ファイルが添付されていません。</td>
-        
-        <?php elseif(File::exists("$contact->storage_file_path")): ?>
-        
-        
+        <?php elseif(File::exists("$contact->storage_file_path")): ?> <!-- アクセサ -->
         <td><img src="<?php echo e(asset("storage/contact/$contact->file_name")); ?>" alt=""></td>
         <?php else: ?>
         <td>ファイルが削除された可能性があります。</td>

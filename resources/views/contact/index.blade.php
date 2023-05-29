@@ -14,8 +14,8 @@
         <th>@sortablelink('name', '名前')</th>
         <th>@sortablelink('body', '内容')</th>
         <th>@sortablelink('created_at', '受付日時')</th>
-        <th>@sortablelink('file_name', 'ファイル')</th>
-        <th>ファイルをプレビューする</th>
+        <th>@sortablelink('file_name', 'ファイルダウンロード')</th>
+        <th>ファイルプレビュー</th>
       </tr>
     </thead>
     <tbody>
@@ -25,10 +25,10 @@
         <td>{{ $contact->name }}</td>
         <td>{!! nl2br(e($contact->body)) !!}</td>
         <td>{{ $contact->created_at }}</td>
-        <td><a href="{{ route('contact.download', $contact->id) }}">{{ $fileName }}</a></td>
+        <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
         @if (!$contact->file_path)
         <td>ファイルが添付されていません。</td>
-        @elseif (File::exists("$contact->storage_file_path"))
+        @elseif (File::exists("$contact->storage_file_path")) <!-- アクセサ -->
         <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt=""></td>
         @else
         <td>ファイルが削除された可能性があります。</td>
