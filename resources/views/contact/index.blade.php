@@ -25,8 +25,10 @@
         <td>{!! nl2br(e($contact->body)) !!}</td>
         <td>{{ $contact->created_at }}</td>
         <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
-        @if ($filePath)
-        <td><img src="{{ asset("storage/app/public/file/laravel_learning.png") }}" alt="ファイルのプレビュー"></td>
+        @if ($contact->file_name)
+        <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt="ファイルのプレビュー"></td>
+        @else
+        <td>ファイルがありません</td>
         @endif
       </tr>
       @endforeach

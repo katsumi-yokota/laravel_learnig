@@ -16,13 +16,12 @@ class ContactController extends Controller
     public function index(Request $request, Contact $contact)
     {
         $sort = $request->sort;
-        $contacts = Contact::query()->sortable()->paginate(5);
+        $contacts = Contact::query()->sortable()->paginate(30);
+        // $contacts = Contact::query()->sortable()->paginate(5);
         
         $fileName = $contact->file_name;
-        // dd($fileName);
         $filePath = "public/file/$fileName";
-        // dd($fileUrl);
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'filePath' => $filePath]);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'fileName' => $fileName]);
     }
 
     public function create()
@@ -35,7 +34,7 @@ class ContactController extends Controller
         $inputs = $request->validated();
 
         $fileName = $request->file('file')->getClientOriginalName(); // storage/app/public/fileにオリジナル名で保存
-        $request->file('file')->storeAs("public/file", $fileName);
+        $request->file('file')->storeAs("public/contact", $fileName);
         $inputs['file_name'] = $fileName;
         $inputs['file_path'] = "storage/app/public/$fileName";
 
@@ -51,7 +50,7 @@ class ContactController extends Controller
     {
         // ファイルダウンロード
         $fileName = $contact->file_name;
-        $filePath = "public/file/$fileName";
+        $filePath = "public/contact/$fileName";
         $mimeType = Storage::mimeType($filePath);
         $headers = [['Content-Type' => $mimeType]];
         return Storage::download($filePath, $fileName, $headers);
