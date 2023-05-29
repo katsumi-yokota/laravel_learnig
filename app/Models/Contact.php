@@ -29,4 +29,11 @@ class Contact extends Model
         'file_name',
         'file_path',
     ];
+
+    // アクセサ
+    protected function getStorageFilePathAttribute(): String
+    {
+        $fileName = $this->file_name;
+        return storage_path("app/public/contact/$fileName");
+    }
 }

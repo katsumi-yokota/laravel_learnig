@@ -17,11 +17,10 @@ class ContactController extends Controller
     {
         $sort = $request->sort;
         $contacts = Contact::query()->sortable()->paginate(30);
-        // $contacts = Contact::query()->sortable()->paginate(5);
         
         $fileName = $contact->file_name;
-        $filePath = "public/file/$fileName";
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'fileName' => $fileName]);
+        $filePath = "app/public/contact/$fileName";
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'fileName' => $fileName, 'filePath' => $filePath]);
     }
 
     public function create()
@@ -33,7 +32,7 @@ class ContactController extends Controller
     {
         $inputs = $request->validated();
 
-        $fileName = $request->file('file')->getClientOriginalName(); // storage/app/public/fileにオリジナル名で保存
+        $fileName = $request->file('file')->getClientOriginalName(); // storage/app/public/contactにオリジナル名で保存
         $request->file('file')->storeAs("public/contact", $fileName);
         $inputs['file_name'] = $fileName;
         $inputs['file_path'] = "storage/app/public/$fileName";

@@ -1,3 +1,5 @@
+<?php $user = App\Models\Contact::find(1); ?>
+
 <?php $__env->startSection('content'); ?>
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
 <!-- CSS -->
@@ -23,11 +25,16 @@
         <td><?php echo e($contact->name); ?></td>
         <td><?php echo nl2br(e($contact->body)); ?></td>
         <td><?php echo e($contact->created_at); ?></td>
-        <td><a href="<?php echo e(route('contact.download', $contact->id)); ?>"><?php echo e($contact->file_name); ?></a></td>
-        <?php if($contact->file_name): ?>
-        <td><img src="<?php echo e(asset("storage/contact/$contact->file_name")); ?>" alt="ファイルのプレビュー"></td>
+        <td><a href="<?php echo e(route('contact.download', $contact->id)); ?>"><?php echo e($fileName); ?></a></td>
+        <?php if(!$contact->file_path): ?>
+        <td>ファイルが添付されていません。</td>
+        
+        <?php elseif(File::exists("$contact->storage_file_path")): ?>
+        
+        
+        <td><img src="<?php echo e(asset("storage/contact/$contact->file_name")); ?>" alt=""></td>
         <?php else: ?>
-        <td>ファイルがありません</td>
+        <td>ファイルが削除された可能性があります。</td>
         <?php endif; ?>
       </tr>
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>

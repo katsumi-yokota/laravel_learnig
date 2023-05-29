@@ -1,3 +1,4 @@
+<?php $user = App\Models\Contact::find(1); ?>
 @extends('layouts.app')
 @section('content')
 <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css">
@@ -24,11 +25,13 @@
         <td>{{ $contact->name }}</td>
         <td>{!! nl2br(e($contact->body)) !!}</td>
         <td>{{ $contact->created_at }}</td>
-        <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
-        @if ($contact->file_name)
-        <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt="ファイルのプレビュー"></td>
+        <td><a href="{{ route('contact.download', $contact->id) }}">{{ $fileName }}</a></td>
+        @if (!$contact->file_path)
+        <td>ファイルが添付されていません。</td>
+        @elseif (File::exists("$contact->storage_file_path"))
+        <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt=""></td>
         @else
-        <td>ファイルがありません</td>
+        <td>ファイルが削除された可能性があります。</td>
         @endif
       </tr>
       @endforeach
