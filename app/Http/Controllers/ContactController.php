@@ -11,6 +11,7 @@ use App\Mail\ContactForm;
 use App\Http\Requests\Contact\StoreRequest; // フォームリクエスト store
 use Illuminate\Support\Facades\Storage; // ファイルダウンロード
 use Illuminate\Support\Str; // ランダム生成
+use App\Http\Controllers\Exception; // 例外処理
 
 class ContactController extends Controller
 {
@@ -30,18 +31,23 @@ class ContactController extends Controller
     public function store(StoreRequest $request)
     {
         $inputs = $request->validated();
-        $fileName = $request->file('file');
-        $request->file('file')->store("public/contact");
-        $hashName = $fileName->hashName();
-        $inputs['file_name'] = $hashName;
-        $inputs['file_path'] = storage_path("app/public/contact/$hashName");
+        $uploadedFile = $request->file('file');
+        if (isset($uploadedFile))
+        {
+            $uploadedFile->store("public/contact");
+            $hashName = $uploadedFile->hashName();
+            $inputs['file_name'] = $uploadedFile->getClientOriginalName();
+            $inputs['file_path'] = storage_path("app/public/contact/$hashName");
 
-        Contact::create($inputs);
-
-        Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
-        Mail::to($inputs['email'])->send(new ContactForm($inputs));
-
-        return back()->with('message','メールを送信したのでご確認ください');
+            Contact::create($inputs);
+            Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
+            Mail::to($inputs['email'])->send(new ContactForm($inputs));
+            return back()->with('succeed','保存に成功しました。メールをご確認ください。');
+        }
+        else
+        {
+            return back()->with('warning','保存に失敗しました。');
+        }
     }
 
     public function download(Contact $contact)
