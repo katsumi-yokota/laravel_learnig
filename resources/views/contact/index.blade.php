@@ -28,13 +28,13 @@
           @if (!$contact->file_path)
           <td></td>
           <td>ファイルが添付されていません。</td>
-          @elseif (File::exists("$contact->file_path"))
+          @elseif (File::exists($contact->file_path)) <!-- public配下を確認 -->
           <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
           <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt=""></td>
           @else
           <td></td>
           <td>ファイルが削除された可能性があります。</td>
-        @endif
+          @endif
       </tr>
       @endforeach
     </tbody>

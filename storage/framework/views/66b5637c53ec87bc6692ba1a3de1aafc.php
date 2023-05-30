@@ -28,14 +28,13 @@
           <?php if(!$contact->file_path): ?>
           <td></td>
           <td>ファイルが添付されていません。</td>
-          <?php elseif(File::exists("$contact->file_path")): ?>
-          
+          <?php elseif(File::exists($contact->file_path)): ?> <!-- public配下を確認 -->
           <td><a href="<?php echo e(route('contact.download', $contact->id)); ?>"><?php echo e($contact->file_name); ?></a></td>
           <td><img src="<?php echo e(asset("storage/contact/$contact->file_name")); ?>" alt=""></td>
           <?php else: ?>
           <td></td>
-          <td>ファイルが削除された可能性があります。<?php echo e($contact->storage_file_path); ?></td>
-        <?php endif; ?>
+          <td>ファイルが削除された可能性があります。</td>
+          <?php endif; ?>
       </tr>
       <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
     </tbody>
