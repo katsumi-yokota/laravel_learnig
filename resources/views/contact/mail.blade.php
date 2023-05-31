@@ -13,7 +13,9 @@
     <p>お名前：{{ $inputs['name'] }}</p>
     <p>お問い合わせ内容：{{ $inputs['body'] }}</p>
     <p>メールアドレス：{{ $inputs['email'] }}</p>
+    @if (isset($inputs['file']))
     <p>ファイル：{{ $inputs['file'] }}</p>
+    @endif
     ーーーー
     <p>担当者よりご連絡いたしますので、今しばらくお待ちください。</p>
 </body>
