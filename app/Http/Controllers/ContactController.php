@@ -35,19 +35,19 @@ class ContactController extends Controller
         if (isset($uploadedFile))
         {
             $uploadedFile->store("public/contact");
+            $movedFile = $uploadedFile->store("public/contact");
+            if (empty($movedFile))
+            {
+                return back()->withInput()->with('warning','保存に失敗しました。');
+            }
             $hashName = $uploadedFile->hashName();
             $inputs['file_name'] = $uploadedFile->getClientOriginalName();
             $inputs['file_path'] = storage_path("app/public/contact/$hashName");
-
-            Contact::create($inputs);
-            Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
-            Mail::to($inputs['email'])->send(new ContactForm($inputs));
-            return back()->with('succeed','保存に成功しました。メールをご確認ください。');
         }
-        else
-        {
-            return back()->with('warning','保存に失敗しました。');
-        }
+        Contact::create($inputs);
+        Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
+        Mail::to($inputs['email'])->send(new ContactForm($inputs));
+        return back()->with('succeed','保存に成功しました。メールをご確認ください。');
     }
 
     public function download(Contact $contact)
