@@ -26,6 +26,7 @@ Route::get('/contact/index', 'App\Http\Controllers\ContactController@index')->mi
 Route::post('/contact/create', 'App\Http\Controllers\ContactController@upload')->name('contact.upload'); // ファイル添付
 Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download'); // ファイルの動的なダウンロード
 Route::post('contact/{contact}/preview', 'App\Http\Controllers\ContactController@index')->name('contact.preview'); // ファイルの動的なプレビュー
+Route::get('contact/{contact}/protected/', 'App\Http\Controllers\ContactController@index')->middleware('auth')->name('contact.protected'); // ログインユーザーのみファイル閲覧可
 
 // つぶやき
 Route::resource('/post','App\Http\Controllers\PostController'); 

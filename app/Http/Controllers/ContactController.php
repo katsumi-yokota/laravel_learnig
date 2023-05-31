@@ -9,9 +9,9 @@ use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
 
 use App\Http\Requests\Contact\StoreRequest; // フォームリクエスト store
+
 use Illuminate\Support\Facades\Storage; // ファイルダウンロード
-use Illuminate\Support\Str; // ランダム生成
-use App\Http\Controllers\Exception; // 例外処理
+use Illuminate\Support\Facades\File;
 
 class ContactController extends Controller
 {
@@ -34,15 +34,14 @@ class ContactController extends Controller
         $uploadedFile = $request->file('file');
         if (isset($uploadedFile))
         {
-            $uploadedFile->store("public/contact");
-            $movedFile = $uploadedFile->store("public/contact");
+            $movedFile = $uploadedFile->store("protected/contact");
             if (empty($movedFile))
             {
                 return back()->withInput()->with('warning','保存に失敗しました。');
             }
-            $hashName = $uploadedFile->hashName();
             $inputs['file_name'] = $uploadedFile->getClientOriginalName();
-            $inputs['file_path'] = storage_path("app/public/contact/$hashName");
+            $inputs['file_path'] = storage_path("app/$movedFile");
+
         }
         Contact::create($inputs);
         Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
@@ -54,8 +53,8 @@ class ContactController extends Controller
     {
         // ファイルダウンロード
         $fileName = $contact->file_name;
-        $filePath = "public/contact/$fileName";
-        $mimeType = Storage::mimeType($filePath);
+        $filePath = $contact->file_path;
+        $mimeType = File::mimeType($filePath);
         $headers = [['Content-Type' => $mimeType]];
         return Storage::download($filePath, $fileName, $headers);
     }
