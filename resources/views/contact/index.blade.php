@@ -30,7 +30,11 @@
           <td>ファイルが添付されていません。</td>
           @elseif (File::exists($contact->file_path)) <!-- public配下を確認 -->
           <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
-          <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt=""></td>
+            @if (preg_match('/.\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
+            <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt=""></td>
+            @else
+            <td>この形式のファイルはプレビューできません。</td>
+            @endif
           @else
           <td></td>
           <td>ファイルが削除された可能性があります。</td>
