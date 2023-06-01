@@ -1,6 +1,16 @@
 @extends('layouts.app')
 @section('content')
+
+{{ $users->appends(request()->query())->links() }}
+
 <div class="container">
+
+  <div class="btn btn-link btn-lg">
+    <x-nav-link :href="route('user.create')">
+      {{ __('新規ユーザー追加') }}
+    </x-nav-link>
+  </div>
+
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
@@ -62,4 +72,3 @@
   </table>
 </div>
 @endsection
-{{ $users->appends(request()->query())->links() }}
