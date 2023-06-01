@@ -10,8 +10,7 @@ use App\Mail\ContactForm;
 
 use App\Http\Requests\Contact\StoreRequest; // フォームリクエスト store
 
-use Illuminate\Support\Facades\Storage; // ファイルダウンロード
-use Illuminate\Support\Facades\File;
+use Illuminate\Support\Facades\File; // ファイルダウンロード
 
 class ContactController extends Controller
 {
@@ -56,6 +55,6 @@ class ContactController extends Controller
         $filePath = $contact->file_path;
         $mimeType = File::mimeType($filePath);
         $headers = [['Content-Type' => $mimeType]];
-        return Storage::download($filePath, $fileName, $headers);
+        return response()->download($filePath, $fileName, $headers);
     }
 }

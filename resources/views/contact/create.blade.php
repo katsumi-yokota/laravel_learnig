@@ -24,6 +24,14 @@
             <form method="post" action="{{  route('contact.store')  }}" enctype="multipart/form-data">
             @csrf
                 <div class="form-group">
+                    <label for="category">お問合せカテゴリー</label>
+                    <select name="" id="category" class="form-control">
+                        <option>カテゴリー1</option>
+                        <option>カテゴリー2</option>
+                        <option>カテゴリー3</option>
+                    </select>
+                </div>
+                <div class="form-group  mt-3">
                     <label for="title">件名</label>
                     <input type="text" name="title" class="form-control" id="title" value="{{  old('title')  }}" placeholder="Enter Title">
                 </div>

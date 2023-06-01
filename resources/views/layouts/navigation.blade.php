@@ -16,6 +16,28 @@
                         {{ __('Dashboard') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @if (!request()->routeIs('user.create'))
+                        <x-nav-link :href="route('contact-category.create')" :active="request()->routeIs('contact-category.create')">
+                            {{ __('新規カテゴリー追加') }}
+                        </x-nav-link>
+                    @endif
+                    @if (!request()->routeIs('contact-category.create'))
+                        <x-nav-link :href="route('user.create')" :active="request()->routeIs('user.create')">
+                            {{ __('新規ユーザー追加') }}
+                        </x-nav-link>
+                    @endif
+                    @if (!request()->routeIs('contact-category.index'))
+                        <x-nav-link :href="route('user.index')" :active="request()->routeIs('user.index')">
+                            {{ __('ユーザー一覧') }}
+                        </x-nav-link>
+                    @endif
+                    @if (!request()->routeIs('user.index'))
+                        <x-nav-link :href="route('contact-category.index')" :active="request()->routeIs('contact-category.index')">
+                            {{ __('カテゴリー一覧') }}
+                        </x-nav-link>
+                    @endif
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

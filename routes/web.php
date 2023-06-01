@@ -28,6 +28,9 @@ Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController
 Route::post('contact/{contact}/preview', 'App\Http\Controllers\ContactController@index')->name('contact.preview'); // ファイルの動的なプレビュー
 Route::get('contact/{contact}/protected/', 'App\Http\Controllers\ContactController@index')->middleware('auth')->name('contact.protected'); // ログインユーザーのみファイル閲覧可
 
+// お問合せフォームのカテゴリー
+Route::resource('/contact-category', 'App\Http\Controllers\ContactCategoryController')->middleware('auth'); // ログインユーザーのみカテゴリー追加可
+
 // つぶやき
 Route::resource('/post','App\Http\Controllers\PostController'); 
 
