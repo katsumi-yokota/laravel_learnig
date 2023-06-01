@@ -29,7 +29,6 @@
           <td></td>
           <td>ファイルが添付されていません。</td>
           @elseif (File::exists($contact->file_path)) <!-- public配下を確認 -->
-          <?php var_dump($contact->file_path, asset("storage/contact/$contact->file_name")) ?>
           <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
             @if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
             <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt=""></td>
