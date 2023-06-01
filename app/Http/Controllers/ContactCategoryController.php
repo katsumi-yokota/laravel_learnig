@@ -12,8 +12,8 @@ class ContactCategoryController extends Controller
      */
     public function index()
     {
-        // TODO: all()以外を使えないか検討
-        $contactCategories = ContactCategory::all(); 
+
+        $contactCategories = ContactCategory::paginate(3);
         return view('contact-category.index', ['contactCategories' => $contactCategories]);
     }
 
@@ -33,7 +33,7 @@ class ContactCategoryController extends Controller
         $contactCategories = new ContactCategory();
         $contactCategories->contact_category = $request->category;
         $contactCategories->save();
-        return redirect()->route('index');
+        return redirect()->route('contact-category.index');
     }
 
     /**
@@ -41,7 +41,8 @@ class ContactCategoryController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $contactCategory = ContactCategory::find($id); // 主キー（id）を指定
+        return view('contact-category.show', ['contactCategory' => $contactCategory]);
     }
 
     /**
