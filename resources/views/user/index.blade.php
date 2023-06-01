@@ -1,9 +1,9 @@
 @extends('layouts.app')
 @section('content')
 
-{{ $users->appends(request()->query())->links() }}
-
-<div class="container">
+<div class="container mt-4">
+  
+  {{ $users->appends(request()->query())->links() }}
 
   <div class="btn btn-link btn-lg">
     <x-nav-link :href="route('user.create')">
