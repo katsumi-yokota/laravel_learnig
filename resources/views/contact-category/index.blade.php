@@ -1,9 +1,10 @@
 @extends('layouts.app')
 @section('content')
 
-{{ $contactCategories->appends(request()->query())->links() }}
+<div class="container mt-4">
 
-<div class="container">
+  {{ $contactCategories->appends(request()->query())->links() }}
+
   <div class="btn btn-link btn-lg">
     <x-nav-link :href="route('contact-category.create')">
       {{ __('新規コンタクトカテゴリー追加') }}
@@ -25,7 +26,15 @@
         <td>{{ $contactCategory->contact_category }}</td>
         <td><a href="{{ route('contact-category.show', $contactCategory->id) }}">詳細</a></td>
         <td><a href="{{ route('contact-category.edit', $contactCategory->id) }}">編集</a></td>
-        <td><a href="{{ route('contact-category.destroy', $contactCategory->id) }}">削除</a></td>
+        <td>
+          <form method="post" action="{{ route('contact-category.destroy', $contactCategory->id) }}">
+            @csrf
+            @method('delete')
+          <button type="submit" onClick="return confirm('本当に削除しますか？');">
+            削除
+          </button>
+          </form>
+        </td>
       </tr>
       @endforeach
     </tbody>

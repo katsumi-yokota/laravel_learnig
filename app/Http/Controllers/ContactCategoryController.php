@@ -33,7 +33,7 @@ class ContactCategoryController extends Controller
         $contactCategories = new ContactCategory();
         $contactCategories->contact_category = $request->category;
         $contactCategories->save();
-        return redirect()->route('contact-category.index');
+        return redirect()->route('contact-category.index')->with('succeed', '保存に成功しました。');
     }
 
     /**
@@ -50,22 +50,26 @@ class ContactCategoryController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $contactCategory = ContactCategory::find($id); // 主キー（id）を指定
+        return view('contact-category.edit', ['contactCategory' => $contactCategory]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request, ContactCategory $contactCategory)
     {
-        //
+        $contactCategory->contact_category = $request->category;
+        $contactCategory->save();
+        return redirect()->route('contact-category.index')->with('succeed', '編集に成功しました。');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(ContactCategory $contactCategory)
     {
-        //
+        $contactCategory->delete();
+        return redirect()->route('contact-category.index')->with('warning', '削除しました。');
     }
 }
