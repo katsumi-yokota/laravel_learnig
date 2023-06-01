@@ -17,7 +17,7 @@ class ContactController extends Controller
     public function index(Request $request, Contact $contact)
     {
         $sort = $request->sort;
-        $contacts = Contact::query()->sortable()->paginate(100);
+        $contacts = Contact::query()->sortable()->paginate(20);
         
         return view('contact.index', ['contacts' => $contacts, 'sort' => $sort]);
     }
