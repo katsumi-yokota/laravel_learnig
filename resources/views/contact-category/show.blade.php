@@ -12,13 +12,20 @@
 </head>
 <body>
   <div class="container">
+
+    <div class="btn btn-link btn-lg">
+      <x-nav-link :href="route('contact-category.edit', $contactCategory->id)">
+        {{ __('編集ページ') }}
+      </x-nav-link>
+    </div>
+
     <h1 class="my-3">詳細</h1>
-    <ul class="list-group">
-      <li class="list-group-item">ID : {{ $contactCategory->id }}</li>
-      <li class="list-group-item">カテゴリー名 : {{ $contactCategory->contact_category }}</li>
-      <li class="list-group-item">追加日時 : {{ $contactCategory->created_at }}</li>
-      <li class="list-group-item">更新日時 : {{ $contactCategory->updated_at }}</li>
-    </ul>
+    <table>
+      <tr><th>ID  </th><td>{{ $contactCategory->id }}</td></tr>
+      <tr><th>カテゴリー  </th><td>{{ $contactCategory->contact_category }}</td></tr>
+      <tr><th>追加日時  </th><td>{{ $contactCategory->created_at }}</td></tr>
+      <tr><th>更新日時  </th><td>{{ $contactCategory->updated_at }}</td></tr>
+    </table>
   </div>
 </body>
 </html>

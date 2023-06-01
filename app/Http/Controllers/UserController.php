@@ -17,7 +17,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $sort = $request->sort;
-        $users = User::query()->sortable()->withTrashed()->paginate(20); // 論理削除されたユーザーも取得、表示
+        $users = User::query()->sortable()->withTrashed()->paginate(4)->onEachSide(1); // 論理削除されたユーザーも取得、表示
 
         return view('user.index', ['users' => $users, 'sort' => $sort]);
         }
