@@ -3,7 +3,7 @@
 
 <div class="container mt-4">
   
-  {{ $users->appends(request()->query())->links() }}
+  {{ $users->appends(request()->query())->links('pagination.default') }}
 
   <div class="btn btn-link btn-lg">
     <x-nav-link :href="route('user.create')">
