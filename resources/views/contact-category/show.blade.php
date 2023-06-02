@@ -20,7 +20,7 @@
     </div>
 
     <h1 class="my-3">詳細</h1>
-    <table>
+    <table class="table table-striped table-bordered">
       <tr><th>ID  </th><td>{{ $contactCategory->id }}</td></tr>
       <tr><th>カテゴリー  </th><td>{{ $contactCategory->contact_category }}</td></tr>
       <tr><th>追加日時  </th><td>{{ $contactCategory->created_at }}</td></tr>
