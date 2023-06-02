@@ -25,6 +25,7 @@ class ContactController extends Controller
 
     public function create()
     {
+        // お問合せフォームにカテゴリーを表示
         $contactCategories = ContactCategory::all();
         return view('contact.create', ['contactCategories' => $contactCategories]);
     }
@@ -45,8 +46,8 @@ class ContactController extends Controller
 
         }
         Contact::create($inputs);
-        Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
-        Mail::to($inputs['email'])->send(new ContactForm($inputs));
+        // Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
+        // Mail::to($inputs['email'])->send(new ContactForm($inputs));
         return back()->with('succeed','保存に成功しました。メールをご確認ください。');
     }
 

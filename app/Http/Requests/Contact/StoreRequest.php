@@ -23,6 +23,8 @@ class StoreRequest extends FormRequest
     {
         return 
         [       
+            'contact_category_id' => [
+            ],
             'title' => [
                 'required',
                 'max:255',

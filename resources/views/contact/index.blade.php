@@ -16,6 +16,7 @@
         <th>@sortablelink('created_at', '受付日時')</th>
         <th>@sortablelink('file_name', 'ファイルダウンロード')</th>
         <th>ファイルプレビュー</th>
+        <th>コンタクトカテゴリーID</th>
       </tr>
     </thead>
     <tbody>
@@ -38,6 +39,11 @@
           @else
           <td></td>
           <td>ファイルが削除された可能性があります。</td>
+          @endif
+          @if (isset($contact->contactcategories->contact_category_id))
+          <td>{{ $contact->contactcategories->contact_category_id }}</td>
+          @else
+          <td>カテゴリーが指定されていません。</td>
           @endif
       </tr>
       @endforeach

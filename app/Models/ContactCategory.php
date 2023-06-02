@@ -8,4 +8,11 @@ use Illuminate\Database\Eloquent\Model;
 class ContactCategory extends Model
 {
     use HasFactory;
+
+    // リレーション
+    public function contacts()
+    {
+        return $this->hasMany("App\Models\Contact");
+        // return $this->hasMany("App\Contact");
+    }
 }

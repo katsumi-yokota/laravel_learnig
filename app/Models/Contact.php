@@ -13,6 +13,7 @@ class Contact extends Model
 
     protected $fillable =
     [
+        'contact_category_id',
         'title',
         'name',
         'email',
@@ -35,5 +36,12 @@ class Contact extends Model
     {
         $fileName = $this->file_name;
         return storage_path("app/public/contact/$fileName");
+    }
+
+    // リレーション
+    public function contactcategory()
+    {
+        return $this->belongsTo("App\Models\ContactCategory");
+        // return $this->belongsTo("App\ContactCategory");
     }
 }

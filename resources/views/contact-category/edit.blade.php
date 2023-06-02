@@ -7,7 +7,6 @@
           @csrf
           @method('put')
             <div class="form-group mt-3">
-                <label for="category">カテゴリーを編集、削除</label>
                 <input type="text" name="category" class="form-control" id="category" cols="30" rows="10" placeholder="" value="{{ $contactCategory->contact_category }}">
             </div>
             <button type="submit" class="btn btn-warning mt-3">編集する</button>
