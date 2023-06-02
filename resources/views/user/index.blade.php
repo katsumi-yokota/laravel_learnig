@@ -3,6 +3,7 @@
 
 <div class="container mt-4">
   
+  {{-- カスタマイズしたページャー --}}
   {{ $users->appends(request()->query())->links('pagination.default') }}
 
   <div class="btn btn-link btn-lg">
