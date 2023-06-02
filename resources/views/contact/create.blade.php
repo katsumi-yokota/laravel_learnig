@@ -25,10 +25,10 @@
             @csrf
                 <div class="form-group">
                     <label for="category">お問合せカテゴリー</label>
-                    <select name="" id="category" class="form-control">
-                        <option>カテゴリー1</option>
-                        <option>カテゴリー2</option>
-                        <option>カテゴリー3</option>
+                    <select name="category" id="category" class="form-control">
+                        @foreach ($contactCategories as $contactCategory)
+                        <option>{{ $contactCategory->contact_category }}</option>
+                        @endforeach
                     </select>
                 </div>
                 <div class="form-group  mt-3">

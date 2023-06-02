@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact; 
+use App\Models\ContactCategory; // コンタクトカテゴリー
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
@@ -14,7 +15,7 @@ use Illuminate\Support\Facades\File; // ファイルダウンロード
 
 class ContactController extends Controller
 {
-    public function index(Request $request, Contact $contact)
+    public function index(Request $request)
     {
         $sort = $request->sort;
         $contacts = Contact::query()->sortable()->paginate(20);
@@ -24,7 +25,8 @@ class ContactController extends Controller
 
     public function create()
     {
-        return view('contact.create');
+        $contactCategories = ContactCategory::all();
+        return view('contact.create', ['contactCategories' => $contactCategories]);
     }
 
     public function store(StoreRequest $request)
