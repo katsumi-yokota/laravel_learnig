@@ -39,9 +39,8 @@ class Contact extends Model
     }
 
     // リレーション
-    public function contactcategory()
+    public function contactCategory()
     {
         return $this->belongsTo("App\Models\ContactCategory");
-        // return $this->belongsTo("App\ContactCategory");
     }
 }

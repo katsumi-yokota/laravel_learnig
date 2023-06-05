@@ -40,8 +40,8 @@
           <td></td>
           <td>ファイルが削除された可能性があります。</td>
           @endif
-          @if (isset($contact->contactcategories->contact_category_id))
-          <td>{{ $contact->contactcategories->contact_category_id }}</td>
+          @if (isset($contact->contactCategory->contact_category))
+          <td>{{ $contact->contactCategory->contact_category }}</td>
           @else
           <td>カテゴリーが指定されていません。</td>
           @endif
