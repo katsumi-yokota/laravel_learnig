@@ -10,42 +10,42 @@
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
+        <th>@sortablelink('contactCategory.name', 'カテゴリー名')</th>
         <th>@sortablelink('title', 'タイトル')</th>
         <th>@sortablelink('name', '名前')</th>
         <th>@sortablelink('body', '内容')</th>
         <th>@sortablelink('created_at', '受付日時')</th>
         <th>@sortablelink('file_name', 'ファイルダウンロード')</th>
         <th>ファイルプレビュー</th>
-        <th>コンタクトカテゴリーID</th>
       </tr>
     </thead>
     <tbody>
       @foreach ($contacts as $contact)
-      <tr>
-        <td>{{ $contact->title }}</td>
-        <td>{{ $contact->name }}</td>
-        <td>{!! nl2br(e($contact->body)) !!}</td>
-        <td>{{ $contact->created_at }}</td>
-          @if (!$contact->file_path)
+        <tr>
+        @if (isset($contact->contactCategory->name))
+          <td>{{ $contact->contactCategory->name }}</td>
+        @else
+          <td></td>
+        @endif
+          <td>{{ $contact->title }}</td>
+          <td>{{ $contact->name }}</td>
+          <td>{!! nl2br(e($contact->body)) !!}</td>
+          <td>{{ $contact->created_at }}</td>
+        @if (!$contact->file_path)
           <td></td>
           <td>ファイルが添付されていません。</td>
-          @elseif (File::exists($contact->file_path)) <!-- public配下を確認 -->
+        @elseif (File::exists($contact->file_path)) <!-- public配下を確認 -->
           <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
-            @if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
+          @if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
             <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt=""></td>
-            @else
-            <td>この形式のファイルはプレビューできません。</td>
-            @endif
           @else
+            <td>この形式のファイルはプレビューできません。</td>
+          @endif
+        @else
           <td></td>
           <td>ファイルが削除された可能性があります。</td>
-          @endif
-          @if (isset($contact->contactCategory->name))
-          <td>{{ $contact->contactCategory->name }}</td>
-          @else
-          <td>カテゴリーが指定されていません。</td>
-          @endif
-      </tr>
+        @endif
+        </tr>
       @endforeach
     </tbody>
   </table>

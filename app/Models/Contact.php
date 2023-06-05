@@ -20,6 +20,7 @@ class Contact extends Model
         'body',
         'file_name',
         'file_path',
+        'name',
     ];
     public $sortable =
     [
@@ -29,6 +30,7 @@ class Contact extends Model
         'body',
         'file_name',
         'file_path',
+        'name',
     ];
 
     // アクセサ

@@ -6,6 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Contact; 
 use App\Models\ContactCategory; // コンタクトカテゴリー
 
+// デバッグ用
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\LOG;
+
+
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
 
@@ -18,7 +23,8 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         $sort = $request->sort;
-        $contacts = Contact::query()->sortable()->paginate(20);
+        $contacts = Contact::with('contactCategory')->sortable()->paginate(20);
+        // dd($contacts);
         
         return view('contact.index', ['contacts' => $contacts, 'sort' => $sort]);
     }
