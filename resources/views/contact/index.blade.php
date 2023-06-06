@@ -7,6 +7,18 @@
 <!-- JavaScript Bundle with Popper -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <div class="container">
+
+  <form action="" method="get">
+  <select name="contact_category_id" id="contact_category_id" class="form-control" value="">
+    {{-- <option class="display:none;" value="">選択してください</option> --}}
+    <option class="" value="">全て</option>
+    @foreach ($contactCategories as $contactCategory)
+      <option @if($contactCategory->id == $selectedContactCategory) selected @endif value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
+    @endforeach
+  </select>
+  <button type="submit" class="form-control btn btn-success">検索</button>
+  </form>
+
   <table class="table table-striped table-bordered">
     <thead>
       <tr>

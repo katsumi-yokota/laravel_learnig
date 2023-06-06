@@ -6,27 +6,31 @@ use Illuminate\Http\Request;
 use App\Models\Contact; 
 use App\Models\ContactCategory; // コンタクトカテゴリー
 
-// デバッグ用
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\LOG;
-
-
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
 
 use App\Http\Requests\Contact\StoreRequest; // フォームリクエスト store
 
 use Illuminate\Support\Facades\File; // ファイルダウンロード
+use Kyslik\ColumnSortable\SortableLink;
 
 class ContactController extends Controller
 {
     public function index(Request $request)
     {
         $sort = $request->sort;
-        $contacts = Contact::with('contactCategory')->sortable()->paginate(20);
-        // dd($contacts);
+        $selectedContactCategory = $request->input('contact_category_id');
+        if (isset($selectedContactCategory))
+        {
+            $contacts = Contact::where('contact_category_id', $selectedContactCategory)->sortable()->paginate(20);
+        }
+        else
+        {
+            $contacts = Contact::sortable()->paginate(20);
+        }
+        $contactCategories = ContactCategory::all();
         
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort]);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'selectedContactCategory' => $selectedContactCategory]);
     }
 
     public function create()
