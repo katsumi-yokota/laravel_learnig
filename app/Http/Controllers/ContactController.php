@@ -54,8 +54,8 @@ class ContactController extends Controller
 
         }
         Contact::create($inputs);
-        // Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
-        // Mail::to($inputs['email'])->send(new ContactForm($inputs));
+        Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
+        Mail::to($inputs['email'])->send(new ContactForm($inputs));
         return back()->with('succeed','保存に成功しました。メールをご確認ください。');
     }
 
