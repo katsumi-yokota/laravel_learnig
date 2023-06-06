@@ -20,13 +20,11 @@ class ContactController extends Controller
     {
         $sort = $request->sort;
         $selectedContactCategory = $request->input('contact_category_id');
+        $contactsQuery = Contact::sortable();
+        $contacts = $contactsQuery->paginate(20);
         if (isset($selectedContactCategory))
         {
-            $contacts = Contact::where('contact_category_id', $selectedContactCategory)->sortable()->paginate(20);
-        }
-        else
-        {
-            $contacts = Contact::sortable()->paginate(20);
+            $contacts = $contactsQuery->where('contact_category_id', $selectedContactCategory)->paginate(20);
         }
         $contactCategories = ContactCategory::all();
         
