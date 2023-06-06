@@ -9,11 +9,11 @@
 <div class="container">
 
   <form action="" method="get">
+  <input type="text" name="keyword" id="keyword" class="form-control" placeholder="タイトルまたは名前を入力してください。" value="@if (isset($searchedKeyword)) {{ $searchedKeyword }} @endif">
   <select name="contact_category_id" id="contact_category_id" class="form-control" value="">
-    {{-- <option class="display:none;" value="">選択してください</option> --}}
-    <option class="" value="">全て</option>
+    <option value="">全て</option>
     @foreach ($contactCategories as $contactCategory)
-      <option @if($contactCategory->id === $selectedContactCategoryID) selected @endif value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
+      <option @if($contactCategory->id == $selectedContactCategoryID) selected @endif value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
     @endforeach
   </select>
   <button type="submit" class="form-control btn btn-success">検索</button>

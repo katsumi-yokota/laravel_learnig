@@ -4,14 +4,14 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Contact; 
-use App\Models\ContactCategory; // コンタクトカテゴリー
+use App\Models\ContactCategory;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
 
-use App\Http\Requests\Contact\StoreRequest; // フォームリクエスト store
+use App\Http\Requests\Contact\StoreRequest;
 
-use Illuminate\Support\Facades\File; // ファイルダウンロード
+use Illuminate\Support\Facades\File;
 use Kyslik\ColumnSortable\SortableLink;
 
 class ContactController extends Controller
@@ -19,16 +19,28 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         $sort = $request->sort;
-        $selectedContactCategoryID = $request->input('contact_category_id');
         $contactsQuery = Contact::sortable();
-        if (isset($selectedContactCategory))
+
+        // 絞り込み
+        $selectedContactCategoryID = $request->input('contact_category_id');
+        if (!empty($selectedContactCategoryID))
         {
             $contactsQuery->where('contact_category_id', $selectedContactCategoryID);
         }
+
+        // 検索
+        $searchedKeyword = $request->input('keyword');
+        if (!empty($searchedKeyword))
+        {
+            $contactsQuery->where('title', 'LIKE', "%{$searchedKeyword}%")->orWhere('name', 'LIKE', "%{$searchedKeyword}%");
+            ; // あいまい検索
+        }
+
         $contacts = $contactsQuery->paginate(20);
+
         $contactCategories = ContactCategory::all();
         
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'selectedContactCategoryID' => $selectedContactCategoryID]);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'selectedContactCategoryID' => $selectedContactCategoryID, 'searchedKeyword' => $searchedKeyword]);
     }
 
     public function create()
