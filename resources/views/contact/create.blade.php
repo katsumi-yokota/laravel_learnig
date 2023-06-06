@@ -27,7 +27,7 @@
                     <label for="contact_category_id">お問合せカテゴリー</label>
                     <select name="contact_category_id" id="contact_category_id" class="form-control" value="{{  old('name')  }}">
                         @foreach ($contactCategories as $contactCategory)
-                        <option value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
+                            <option value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
                         @endforeach
                     </select>
                 </div>
