@@ -31,7 +31,7 @@ class ContactCategoryController extends Controller
     public function store(Request $request)
     {
         $contactCategories = new ContactCategory();
-        $contactCategories->contact_category = $request->category;
+        $contactCategories->name = $request->category;
         $contactCategories->save();
         return redirect()->route('contact-category.index')->with('succeed', '保存に成功しました。');
     }
