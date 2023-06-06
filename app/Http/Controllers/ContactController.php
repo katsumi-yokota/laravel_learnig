@@ -19,16 +19,16 @@ class ContactController extends Controller
     public function index(Request $request)
     {
         $sort = $request->sort;
-        $selectedContactCategory = $request->input('contact_category_id');
+        $selectedContactCategoryID = $request->input('contact_category_id');
         $contactsQuery = Contact::sortable();
-        $contacts = $contactsQuery->paginate(20);
         if (isset($selectedContactCategory))
         {
-            $contacts = $contactsQuery->where('contact_category_id', $selectedContactCategory)->paginate(20);
+            $contactsQuery->where('contact_category_id', $selectedContactCategoryID);
         }
+        $contacts = $contactsQuery->paginate(20);
         $contactCategories = ContactCategory::all();
         
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'selectedContactCategory' => $selectedContactCategory]);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'selectedContactCategoryID' => $selectedContactCategoryID]);
     }
 
     public function create()

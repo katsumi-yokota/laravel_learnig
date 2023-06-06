@@ -13,7 +13,7 @@
     {{-- <option class="display:none;" value="">選択してください</option> --}}
     <option class="" value="">全て</option>
     @foreach ($contactCategories as $contactCategory)
-      <option @if($contactCategory->id == $selectedContactCategory) selected @endif value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
+      <option @if($contactCategory->id === $selectedContactCategoryID) selected @endif value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
     @endforeach
   </select>
   <button type="submit" class="form-control btn btn-success">検索</button>
