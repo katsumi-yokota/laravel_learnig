@@ -32,8 +32,8 @@ class ContactController extends Controller
         $keyword = trim($request->input('keyword'));
         if (!empty($keyword))
         {
-            $escapedKeyword = addcslashes($keyword, '%_');
-            $contactsQuery->where('title', 'LIKE', "%{$escapedKeyword}%")->orWhere('name', 'LIKE', "%{$escapedKeyword}%");
+            $escapedKeyword = '%' . addcslashes($keyword, '%_\\') . '%';
+            $contactsQuery->where('title', 'LIKE', $escapedKeyword)->orWhere('name', 'LIKE', $escapedKeyword);
         }
 
         $contacts = $contactsQuery->paginate(20);
