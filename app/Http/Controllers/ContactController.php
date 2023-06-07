@@ -14,6 +14,8 @@ use App\Http\Requests\Contact\StoreRequest;
 use Illuminate\Support\Facades\File;
 use Kyslik\ColumnSortable\SortableLink;
 
+use Illuminate\Support\Str; // 文字置換
+
 class ContactController extends Controller
 {
     public function index(Request $request)
@@ -29,18 +31,19 @@ class ContactController extends Controller
         }
 
         // 検索
-        $searchedKeyword = $request->input('keyword');
-        if (!empty($searchedKeyword))
+        $keyword = trim($request->input('keyword'));
+        if (!empty($keyword))
         {
-            $contactsQuery->where('title', 'LIKE', "%{$searchedKeyword}%")->orWhere('name', 'LIKE', "%{$searchedKeyword}%");
-            ; // あいまい検索
+            $escapedKeyword = addcslashes($keyword, '%_');
+            $contactsQuery->where('title', 'LIKE', "%{$escapedKeyword}%")->orWhere('name', 'LIKE', "%{$escapedKeyword}%");
+            // あいまい検索
         }
 
         $contacts = $contactsQuery->paginate(20);
 
         $contactCategories = ContactCategory::all();
         
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'selectedContactCategoryID' => $selectedContactCategoryID, 'searchedKeyword' => $searchedKeyword]);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'selectedContactCategoryID' => $selectedContactCategoryID, 'keyword' => $keyword]);
     }
 
     public function create()

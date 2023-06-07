@@ -9,7 +9,7 @@
 <div class="container">
 
   <form action="" method="get">
-  <input type="text" name="keyword" id="keyword" class="form-control" placeholder="タイトルまたは名前を入力してください。" value="@if (isset($searchedKeyword)) {{ $searchedKeyword }} @endif">
+  <input type="text" name="keyword" id="keyword" class="form-control" placeholder="タイトルまたは名前を入力してください。" value="@if(isset($keyword)){{ $keyword }}@endif">
   <select name="contact_category_id" id="contact_category_id" class="form-control" value="">
     <option value="">全て</option>
     @foreach ($contactCategories as $contactCategory)
