@@ -50,13 +50,13 @@ class ContactController extends Controller
         return view('contact.create', ['contactCategories' => $contactCategories]);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $request, Contact $contact)
     {
         $inputs = $request->validated();
         $uploadedFile = $request->file('file');
         if (isset($uploadedFile))
         {
-            $movedFile = $uploadedFile->store("protected/contact");
+            $movedFile = $uploadedFile->store("public/contact");
             if (empty($movedFile))
             {
                 return back()->withInput()->with('warning','保存に失敗しました。');
@@ -79,5 +79,10 @@ class ContactController extends Controller
         $mimeType = File::mimeType($filePath);
         $headers = [['Content-Type' => $mimeType]];
         return response()->download($filePath, $fileName, $headers);
+    }
+    public function show($id)
+    {   
+        $contact = Contact::find($id);
+        return view('contact.show', compact('contact'));
     }
 }
