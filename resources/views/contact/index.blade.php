@@ -29,6 +29,7 @@
         <th>@sortablelink('created_at', '受付日時')</th>
         <th>@sortablelink('file_name', 'ファイルダウンロード')</th>
         <th>ファイルプレビュー</th>
+        <th>詳細</th>
       </tr>
     </thead>
     <tbody>
@@ -49,7 +50,8 @@
         @elseif (File::exists($contact->file_path)) <!-- public配下を確認 -->
           <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
           @if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
-            <td><img src="{{ asset("storage/contact/$contact->file_name") }}" alt=""></td>
+            <?php $hashedName = basename($contact->file_path); ?>
+            <td><img src="{{ asset("storage/contact/$hashedName") }}" alt=""></td>
           @else
             <td>この形式のファイルはプレビューできません。</td>
           @endif
@@ -57,6 +59,7 @@
           <td></td>
           <td>ファイルが削除された可能性があります。</td>
         @endif
+          <td><a href="{{ route('contact.show', $contact->id) }}">詳細</a></td>
         </tr>
       @endforeach
     </tbody>
