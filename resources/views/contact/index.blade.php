@@ -51,7 +51,7 @@
           <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
           @if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
             <?php $hashedName = basename($contact->file_path); ?>
-            <td><img src="{{ asset("storage/contact/$hashedName") }}" alt=""></td>
+            <td>@Auth<img src="{{ asset("storage/contact/$hashedName") }}" alt="">@endAuth</td>
           @else
             <td>この形式のファイルはプレビューできません。</td>
           @endif

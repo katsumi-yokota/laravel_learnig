@@ -50,20 +50,19 @@ class ContactController extends Controller
         return view('contact.create', ['contactCategories' => $contactCategories]);
     }
 
-    public function store(StoreRequest $request, Contact $contact)
+    public function store(StoreRequest $request)
     {
         $inputs = $request->validated();
         $uploadedFile = $request->file('file');
         if (isset($uploadedFile))
         {
-            $movedFile = $uploadedFile->store("public/contact");
+            $movedFile = $uploadedFile->store('protected/contact');
             if (empty($movedFile))
             {
                 return back()->withInput()->with('warning','保存に失敗しました。');
             }
             $inputs['file_name'] = $uploadedFile->getClientOriginalName();
             $inputs['file_path'] = storage_path("app/$movedFile");
-
         }
         Contact::create($inputs);
         Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
