@@ -14,8 +14,6 @@ use App\Http\Requests\Contact\StoreRequest;
 use Illuminate\Support\Facades\File;
 use Kyslik\ColumnSortable\SortableLink;
 
-use Illuminate\Support\Str; // 文字置換
-
 class ContactController extends Controller
 {
     public function index(Request $request)
@@ -36,7 +34,6 @@ class ContactController extends Controller
         {
             $escapedKeyword = addcslashes($keyword, '%_');
             $contactsQuery->where('title', 'LIKE', "%{$escapedKeyword}%")->orWhere('name', 'LIKE', "%{$escapedKeyword}%");
-            // あいまい検索
         }
 
         $contacts = $contactsQuery->paginate(20);
