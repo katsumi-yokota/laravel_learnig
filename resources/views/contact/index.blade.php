@@ -50,8 +50,7 @@
         @elseif (File::exists($contact->file_path)) <!-- public配下を確認 -->
           <td><a href="{{ route('contact.download', $contact->id) }}">{{ $contact->file_name }}</a></td>
           @if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
-            <?php $hashedName = basename($contact->file_path); ?>
-            <td>@Auth<img src="{{ asset("storage/contact/$hashedName") }}" alt="">@endAuth</td>
+            <td><img src="{{ route('contact.preview', $contact->id) }}" alt=""></td>
           @else
             <td>この形式のファイルはプレビューできません。</td>
           @endif

@@ -72,16 +72,41 @@ class ContactController extends Controller
 
     public function download(Contact $contact)
     {
-        // ファイルダウンロード
         $fileName = $contact->file_name;
         $filePath = $contact->file_path;
         $mimeType = File::mimeType($filePath);
         $headers = [['Content-Type' => $mimeType]];
         return response()->download($filePath, $fileName, $headers);
     }
+
     public function show($id)
     {   
         $contact = Contact::find($id);
         return view('contact.show', compact('contact'));
+    }
+
+    public function preview($id)
+    {
+        $contact = Contact::findOrFail($id);
+        $filePath = $contact->file_path;
+
+        if (empty($filePath))
+        {
+            abort(404);
+        }
+        if (!File::exists($filePath))
+        {
+            abort(404);
+        }
+        if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
+        {
+            // $previewFile = response()->file($filePath);
+            // return view('contact', ['previewFile' => $previewFile]);
+            return response()->file($filePath);
+        }
+        else
+        {
+            abort(400);
+        }
     }
 }

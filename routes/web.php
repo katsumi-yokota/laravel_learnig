@@ -1,7 +1,9 @@
 <?php
+// namespace App\Http\Controllers;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+// use Illuminate\Routing\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,14 +21,16 @@ Route::get('/', function () {
 });
 
 // お問合せフォーム
-Route::get('/contact/create','App\Http\Controllers\ContactController@create')->name('contact.create'); // ページを表示
-Route::post('/contact/store','App\Http\Controllers\ContactController@store')->name('contact.store'); // 内容を保存
-Route::get('/contact/index', 'App\Http\Controllers\ContactController@index')->middleware('auth')->name('contact.index'); 
-// 一覧を表示 // ログインユーザーのみアクセス可能
-Route::post('/contact/create', 'App\Http\Controllers\ContactController@upload')->name('contact.upload'); // ファイル添付
-Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download'); // ファイルの動的なダウンロード
-Route::post('contact/{contact}/preview', 'App\Http\Controllers\ContactController@index')->name('contact.preview'); // ファイルの動的なプレビュー
-Route::get('contact/{contact}/protected/', 'App\Http\Controllers\ContactController@index')->middleware('auth')->name('contact.protected'); // ログインユーザーのみファイル閲覧可
+Route::get('contact/create','App\Http\Controllers\ContactController@create')->name('contact.create'); // ページを表示
+Route::post('contact','App\Http\Controllers\ContactController@store')->name('contact.store'); // 内容を保存
+
+Route::group(['middleware' => 'auth'], function()
+{
+    Route::get('contact', 'App\Http\Controllers\ContactController@index')->name('contact.index'); 
+    Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download'); // ファイルの動的なダウンロード
+    Route::get('contact/{contact}/preview', 'App\Http\Controllers\ContactController@preview')->where('contact', '[1-9][0-9]*')->name('contact.preview'); // ファイルの動的なプレビュー
+    Route::get('contact/{contact}', 'App\Http\Controllers\ContactController@show')->name('contact.show'); // 詳細
+});
 
 // お問合せフォームのカテゴリー
 Route::resource('/contact-category', 'App\Http\Controllers\ContactCategoryController')->middleware('auth'); // ログインユーザーのみカテゴリー追加可
