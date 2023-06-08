@@ -100,8 +100,6 @@ class ContactController extends Controller
         }
         if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
         {
-            // $previewFile = response()->file($filePath);
-            // return view('contact', ['previewFile' => $previewFile]);
             return response()->file($filePath);
         }
         else
