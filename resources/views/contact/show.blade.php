@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-<?php $hashedName = basename($contact->file_path); ?>
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -26,7 +25,7 @@
         ファイルが添付されていません。
       @elseif (File::exists($contact->file_path))
         @if (preg_match('/.+\.(png|jpe?g|gif|bmp)$/', $contact->file_name))
-          <img src="{{ asset("storage/contact/$hashedName") }}" alt="">
+          <img src="{{ route('contact.preview', $contact->id) }}" alt="">
         @else
         この形式のファイルはプレビューできません。
         @endif
