@@ -33,7 +33,21 @@
         ファイルが削除された可能性があります。
       @endif
       </td></tr>
-      <tr><th>対応履歴  </th><td>ここに対応履歴を表示</td></tr>
+      <tr>
+        <th>レスポンス</th>
+        <td>
+          <form method="post" action="{{ route('contact-response.store', $contact->id) }}">
+            @csrf
+            <div class="form-group">
+              <label for="response_content">レスポンス</label>
+              <textarea name="response_content" class="form-control" id="response_content" value="" placeholder="レスポンスしてください。">{{ old('response_content') }}</textarea>
+            </div>
+            <button type="submit" class="btn btn-success mt-3">送信する</button>
+          </form>
+        </td>
+      </tr>
+      {{-- <tr><th>返信一覧  </th><td>{{ dd($contact->contactResponses) }}</td></tr> --}}
+      {{-- <tr><th>返信一覧  </th><td>{{ $contact->contactResponses->response_content }}</td></tr> --}}
     </table>
   </div>
 </body>

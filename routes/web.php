@@ -1,9 +1,7 @@
 <?php
-// namespace App\Http\Controllers;
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
-// use Illuminate\Routing\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -30,6 +28,9 @@ Route::group(['middleware' => 'auth'], function()
     Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download'); // ファイルの動的なダウンロード
     Route::get('contact/{contact}/preview', 'App\Http\Controllers\ContactController@preview')->where('contact', '[1-9][0-9]*')->name('contact.preview'); // ファイルの動的なプレビュー
     Route::get('contact/{contact}', 'App\Http\Controllers\ContactController@show')->name('contact.show'); // 詳細
+
+    // 対応履歴
+    Route::post('contact/{contact}/contact-response','App\Http\Controllers\ContactResponseController@store')->name('contact-response.store');
 });
 
 // お問合せフォームのカテゴリー
