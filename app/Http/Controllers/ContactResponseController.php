@@ -2,13 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Contact;
-use Illuminate\Auth\Events\Validated;
+use App\Models\ContactResponse;
 use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\ContactResponse\StoreRequest;
-use Symfony\Component\Console\Input\Input;
+use App\Http\Requests\ContactResponse\UpdateRequest;
 
 class ContactResponseController extends Controller
 {
@@ -52,15 +51,19 @@ class ContactResponseController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $contactResponse = ContactResponse::findOrFail($id);
+        return view('contact-response.edit', ['contactResponse' => $contactResponse]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $updateRequest, $id)
     {
-        //
+        $contactResponse = ContactResponse::findOrFail($id);
+        $contactResponse['response_content'] = $updateRequest->validated();
+        $contactResponse->save();
+        return back()->with('succeed', '編集に成功しました。');
     }
 
     /**
