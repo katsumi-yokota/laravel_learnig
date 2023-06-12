@@ -43,6 +43,11 @@ class Contact extends Model
     // リレーション
     public function contactCategory()
     {
-        return $this->belongsTo("App\Models\ContactCategory");
+        return $this->belongsTo('App\Models\ContactCategory');
+    }
+
+    public function contactResponses()
+    {
+        return $this->hasMany('App\Models\ContactResponse');
     }
 }
