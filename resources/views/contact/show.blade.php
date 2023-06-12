@@ -1,6 +1,5 @@
 @extends('layouts.app')
 @section('content')
-{{-- @dd($contact->users) --}}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -54,6 +53,8 @@
           <th>レスポンス内容</th>
           <th>対応者</th>
           <th>対応日時</th>
+          <th>編集</th>
+          <th>削除</th>
         </tr>
       </thead>
       <tbody>
@@ -62,6 +63,12 @@
           <td>{{ $contactResponse->response_content }}</td>
           <td>@if ($contactResponse->user) {{ $contactResponse->user->name }} @endif</td>
           <td>{{ $contactResponse->created_at }}</td>
+          <td>
+            @if ($contactResponse->user && Auth::user()->name == $contactResponse->user->name)
+              <a href="{{ route('contact-response.edit', $contactResponse->id) }}" class="btn btn-primary">編集</a>
+            @endif
+          </td>
+          <td>@if ($contactResponse->user && Auth::user()->name == $contactResponse->user->name) <a href="">削除</a> @endif </td>
         </tr>
         @endforeach
       </tbody>
