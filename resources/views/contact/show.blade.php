@@ -47,9 +47,24 @@
           </form>
         </td>
       </tr>
-        @foreach ($contact->contactResponses as $contactResponse)
-            <tr><th>レスポンス履歴  </th><td>{{ $contactResponse->response_content }} @if ($contactResponse->user){{ '対応者: ' . $contactResponse->user->name }} @endif {{ '対応日時: ' . $contactResponse->created_at }}</td></tr>
+    </table>
+    <table class="table table-striped table-bordered">
+      <thead>
+        <tr>
+          <th>レスポンス内容</th>
+          <th>対応者</th>
+          <th>対応日時</th>
+        </tr>
+      </thead>
+      <tbody>
+        @foreach ($contact->contactResponses->sortByDesc('created_at') as $contactResponse)
+        <tr>
+          <td>{{ $contactResponse->response_content }}</td>
+          <td>@if ($contactResponse->user) {{ $contactResponse->user->name }} @endif</td>
+          <td>{{ $contactResponse->created_at }}</td>
+        </tr>
         @endforeach
+      </tbody>
     </table>
   </div>
 </body>
