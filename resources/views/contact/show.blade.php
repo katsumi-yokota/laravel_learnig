@@ -1,5 +1,6 @@
 @extends('layouts.app')
 @section('content')
+{{-- @dd($contact->users) --}}
 <!DOCTYPE html>
 <html lang="ja">
 <head>
@@ -46,8 +47,9 @@
           </form>
         </td>
       </tr>
-      {{-- <tr><th>返信一覧  </th><td>{{ dd($contact->contactResponses) }}</td></tr> --}}
-      {{-- <tr><th>返信一覧  </th><td>{{ $contact->contactResponses->response_content }}</td></tr> --}}
+        @foreach ($contact->contactResponses as $contactResponse)
+            <tr><th>レスポンス履歴  </th><td>{{ $contactResponse->response_content }} @if ($contactResponse->user){{ '対応者: ' . $contactResponse->user->name }} @endif</td></tr>
+        @endforeach
     </table>
   </div>
 </body>

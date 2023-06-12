@@ -61,4 +61,15 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    // リレーション
+    public function contactResponses()
+    {
+        return $this->hasMany('App\Models\ContactResponse');
+    }
+
+    public function contacts()
+    {
+        return $this->hasMany('App\Models\Contact');
+    }
 }
