@@ -5,8 +5,10 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact;
 use Illuminate\Auth\Events\Validated;
+use Illuminate\Support\Facades\Auth;
 
 use App\Http\Requests\ContactResponse\StoreRequest;
+use Symfony\Component\Console\Input\Input;
 
 class ContactResponseController extends Controller
 {
@@ -31,7 +33,9 @@ class ContactResponseController extends Controller
      */
     public function store(StoreRequest $request, Contact $contact)
     {
-        $contact->contactResponses()->create($request->validated());
+        $inputs = $request->validated();
+        $inputs['user_id'] = Auth::id();
+        $contact->contactResponses()->create($inputs);
         return back()->with('succeed', 'レスポンスしました。');
     }
 

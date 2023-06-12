@@ -13,11 +13,17 @@ class ContactResponse extends Model
     [
         'response_content',
         'contact_id',
+        'user_id',
     ];
 
     // リレーション
     public function contact()
     {
         return $this->belongsTo('App\Models\Contact');
+    }
+
+    public function user()
+    {
+        return $this->belongsTo('App\Models\User');
     }
 }
