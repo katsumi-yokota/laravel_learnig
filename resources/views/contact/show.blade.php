@@ -48,7 +48,7 @@
         </td>
       </tr>
         @foreach ($contact->contactResponses as $contactResponse)
-            <tr><th>レスポンス履歴  </th><td>{{ $contactResponse->response_content }} @if ($contactResponse->user){{ '対応者: ' . $contactResponse->user->name }} @endif</td></tr>
+            <tr><th>レスポンス履歴  </th><td>{{ $contactResponse->response_content }} @if ($contactResponse->user){{ '対応者: ' . $contactResponse->user->name }} @endif {{ '対応日時: ' . $contactResponse->created_at }}</td></tr>
         @endforeach
     </table>
   </div>
