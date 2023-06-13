@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\ContactResponse;
+use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\withTrashed;
 
 use App\Http\Requests\ContactResponse\StoreRequest;
 use App\Http\Requests\ContactResponse\UpdateRequest;
@@ -49,28 +51,37 @@ class ContactResponseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    // public function edit(int $contactId, ContactResponse $contactResponse)
+    public function edit(int $contactId, int $contactResponseId)
     {
-        $contactResponse = ContactResponse::findOrFail($id);
-        return view('contact-response.edit', ['contactResponse' => $contactResponse]);
+        $contactResponse = ContactResponse::findOrFail($contactResponseId);
+        if (Auth::id() === (int)$contactResponse['user_id'])
+        {
+            return view('contact-response.edit', ['contactResponse' => $contactResponse]);
+        }
+        else
+        {
+            abort(404);
+        }
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateRequest $updateRequest, $id)
+    public function update($contactId, $contactResponseId, UpdateRequest $updateRequest)
     {
         $validatedDataAtUpdate = $updateRequest->validated();
-        $contactResponse = contactResponse::findOrFail($id);
-        $contactResponse->fill($validatedDataAtUpdate)->save(); // TO DO : 複数カラムのupdateではないのでfill()を使わない方法の検討
-        return back()->with('succeed', '編集に成功しました。');
+        $contactResponse = contactResponse::findOrFail($contactResponseId);
+        $contactResponse->fill($validatedDataAtUpdate)->save(); // TO DO : fill()を使わない方法の検討
+        return redirect()->route('contact.show', ['contact' => $contactId])->with('succeed', '編集に成功しました。');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($contactId, $contactResponseId)
     {
-        //
+        contactResponse::findOrFail($contactResponseId)->delete();
+        return back()->with('warning', '削除しました。');
     }
 }

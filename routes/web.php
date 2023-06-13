@@ -31,10 +31,13 @@ Route::group(['middleware' => 'auth'], function()
 
     // 対応履歴
     Route::post('contact/{contact}/contact-response','App\Http\Controllers\ContactResponseController@store')->name('contact-response.store');
+    Route::get('contact/{contact}/contact-response/{contact_response}/edit','App\Http\Controllers\ContactResponseController@edit')->name('contact-response.edit');
+    Route::put('contact/{contact}/contact-response/{contact_response}/update','App\Http\Controllers\ContactResponseController@update')->name('contact-response.update');
+    Route::delete('contact/{contact}/contact-response/{contact_response}/destroy','App\Http\Controllers\ContactResponseController@destroy')->name('contact-response.destroy');
 });
 
 // お問合せフォームのカテゴリー
-Route::resource('/contact-category', 'App\Http\Controllers\ContactCategoryController')->middleware('auth'); // ログインユーザーのみカテゴリー追加可
+Route::resource('/contact-category', 'App\Http\Controllers\ContactCategoryController')->middleware('auth');
 
 // つぶやき
 Route::resource('/post','App\Http\Controllers\PostController'); 

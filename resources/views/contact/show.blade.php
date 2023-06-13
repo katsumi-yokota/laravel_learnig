@@ -59,17 +59,26 @@
       </thead>
       <tbody>
         @foreach ($contact->contactResponses->sortByDesc('created_at') as $contactResponse)
-        <tr>
-          <td>{{ $contactResponse->response_content }}</td>
-          <td>@if ($contactResponse->user) {{ $contactResponse->user->name }} @endif</td>
-          <td>{{ $contactResponse->created_at }}</td>
-          <td>
-            @if ($contactResponse->user && Auth::user()->name == $contactResponse->user->name)
-              <a href="{{ route('contact-response.edit', $contactResponse->id) }}" class="btn btn-primary">編集</a>
-            @endif
-          </td>
-          <td>@if ($contactResponse->user && Auth::user()->name == $contactResponse->user->name) <a href="">削除</a> @endif </td>
-        </tr>
+          <?php $isSameUser = $contactResponse->user && Auth::id() === $contactResponse->user->id ?>
+          <tr>
+            <td>{{ $contactResponse->response_content }}</td>
+            <td>@if ($contactResponse->user) {{ $contactResponse->user->name }} @endif</td>
+            <td>{{ $contactResponse->created_at }}</td>
+            <td>
+              @if ($isSameUser)
+                <a href="{{ route('contact-response.edit', ['contact' => $contactResponse->contact_id, 'contact_response' => $contactResponse->id]) }}" class="btn btn-primary">編集</a>
+              @endif
+            </td>
+            <td>
+              @if ($isSameUser) 
+                <form method="post" action="{{ route('contact-response.destroy', ['contact' => $contactResponse->contact_id, 'contact_response' => $contactResponse->id]) }}">
+                  @csrf
+                  @method('delete')
+                  <button type="submit" class="btn btn-warning" onClick="return confirm('本当に削除しますか？');">削除</button>
+                </form>
+              @endif 
+            </td>
+          </tr>
         @endforeach
       </tbody>
     </table>
