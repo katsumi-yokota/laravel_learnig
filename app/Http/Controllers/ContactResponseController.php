@@ -54,24 +54,23 @@ class ContactResponseController extends Controller
     // public function edit(int $contactId, ContactResponse $contactResponse)
     public function edit(int $contactId, int $contactResponseId)
     {
-        $contactResponse = ContactResponse::findOrFail($contactResponseId);
-        if (Auth::id() === (int)$contactResponse['user_id'])
-        {
-            return view('contact-response.edit', ['contactResponse' => $contactResponse]);
-        }
-        else
-        {
-            abort(404);
-        }
+        $contactResponse = ContactResponse::where('contact_id', $contactId)
+            ->where('id', $contactResponseId)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
+        return view('contact-response.edit', ['contactResponse' => $contactResponse]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update($contactId, $contactResponseId, UpdateRequest $updateRequest)
+    public function update(UpdateRequest $updateRequest, $contactId, $contactResponseId)
     {
         $validatedDataAtUpdate = $updateRequest->validated();
-        $contactResponse = contactResponse::findOrFail($contactResponseId);
+        $contactResponse = ContactResponse::where('contact_id', $contactId)
+            ->where('id', $contactResponseId)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
         $contactResponse->fill($validatedDataAtUpdate)->save(); // TO DO : fill()を使わない方法の検討
         return redirect()->route('contact.show', ['contact' => $contactId])->with('succeed', '編集に成功しました。');
     }
@@ -81,7 +80,11 @@ class ContactResponseController extends Controller
      */
     public function destroy($contactId, $contactResponseId)
     {
-        contactResponse::findOrFail($contactResponseId)->delete();
+        ContactResponse::where('contact_id', $contactId)
+            ->where('id', $contactResponseId)
+            ->where('user_id', Auth::id())
+            ->firstOrFail()
+            ->delete();
         return back()->with('warning', '削除しました。');
     }
 }
