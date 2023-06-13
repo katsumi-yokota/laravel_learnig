@@ -60,9 +60,9 @@ class ContactResponseController extends Controller
      */
     public function update(UpdateRequest $updateRequest, $id)
     {
-        $contactResponse = ContactResponse::findOrFail($id);
-        $contactResponse['response_content'] = $updateRequest->validated();
-        $contactResponse->save();
+        $validatedDataAtUpdate = $updateRequest->validated();
+        $contactResponse = contactResponse::findOrFail($id);
+        $contactResponse->fill($validatedDataAtUpdate)->save(); // TO DO : 複数カラムのupdateではないのでfill()を使わない方法の検討
         return back()->with('succeed', '編集に成功しました。');
     }
 
