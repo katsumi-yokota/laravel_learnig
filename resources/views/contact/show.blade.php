@@ -65,18 +65,18 @@
             <td>@if ($contactResponse->user) {{ $contactResponse->user->name }} @endif</td>
             <td>{{ $contactResponse->created_at }}</td>
             <td>
-              @if ($isSameUser)
-                <a href="{{ route('contact-response.edit', ['contact' => $contactResponse->contact_id, 'contact_response' => $contactResponse->id]) }}" class="btn btn-primary">編集</a>
-              @endif
+            @if ($isSameUser)
+              <a href="{{ route('contact-response.edit', ['contact' => $contactResponse->contact_id, 'contact_response' => $contactResponse->id]) }}" class="btn btn-primary">編集</a>
+            @endif
             </td>
             <td>
-              @if ($isSameUser) 
-                <form method="post" action="{{ route('contact-response.destroy', ['contact' => $contactResponse->contact_id, 'contact_response' => $contactResponse->id]) }}">
-                  @csrf
-                  @method('delete')
-                  <button type="submit" class="btn btn-warning" onClick="return confirm('本当に削除しますか？');">削除</button>
-                </form>
-              @endif 
+            @if ($isSameUser) 
+              <form method="post" action="{{ route('contact-response.destroy', ['contact' => $contactResponse->contact_id, 'contact_response' => $contactResponse->id]) }}">
+                @csrf
+                @method('delete')
+                <button type="submit" class="btn btn-warning" onClick="return confirm('本当に削除しますか？');">削除</button>
+              </form>
+            @endif 
             </td>
           </tr>
         @endforeach
