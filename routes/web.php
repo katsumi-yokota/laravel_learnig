@@ -19,15 +19,15 @@ Route::get('/', function () {
 });
 
 // お問合せフォーム
-Route::get('contact/create','App\Http\Controllers\ContactController@create')->name('contact.create'); // ページを表示
-Route::post('contact','App\Http\Controllers\ContactController@store')->name('contact.store'); // 内容を保存
+Route::get('contact/create','App\Http\Controllers\ContactController@create')->name('contact.create');
+Route::post('contact','App\Http\Controllers\ContactController@store')->name('contact.store');
 
 Route::group(['middleware' => 'auth'], function()
 {
     Route::get('contact', 'App\Http\Controllers\ContactController@index')->name('contact.index'); 
-    Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download'); // ファイルの動的なダウンロード
-    Route::get('contact/{contact}/preview', 'App\Http\Controllers\ContactController@preview')->where('contact', '[1-9][0-9]*')->name('contact.preview'); // ファイルの動的なプレビュー
-    Route::get('contact/{contact}', 'App\Http\Controllers\ContactController@show')->name('contact.show'); // 詳細
+    Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download');
+    Route::get('contact/{contact}/preview', 'App\Http\Controllers\ContactController@preview')->where('contact', '[1-9][0-9]*')->name('contact.preview');
+    Route::get('contact/{contact}', 'App\Http\Controllers\ContactController@show')->name('contact.show');
 
     // 対応履歴
     Route::post('contact/{contact}/contact-response','App\Http\Controllers\ContactResponseController@store')->name('contact-response.store');
