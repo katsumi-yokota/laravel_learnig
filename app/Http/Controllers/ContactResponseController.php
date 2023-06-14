@@ -10,6 +10,7 @@ use App\Http\Controllers\withTrashed;
 
 use App\Http\Requests\ContactResponse\StoreRequest;
 use App\Http\Requests\ContactResponse\UpdateRequest;
+use App\Http\Requests\ContactResponse\PatchRequest;
 
 class ContactResponseController extends Controller
 {
@@ -51,7 +52,6 @@ class ContactResponseController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    // public function edit(int $contactId, ContactResponse $contactResponse)
     public function edit(int $contactId, int $contactResponseId)
     {
         $contactResponse = ContactResponse::where('contact_id', $contactId)
@@ -86,5 +86,15 @@ class ContactResponseController extends Controller
             ->firstOrFail()
             ->delete();
         return back()->with('warning', '削除しました。');
+    }
+
+    public function patch(PatchRequest $patchRequest, $contactId, $contactResponseId)
+    {
+        $validatedDataAtPatch = (int)($patchRequest->validated());
+        $contact = Contact::find($contactId);
+        $contact['status'] = $validatedDataAtPatch;
+        $contact->save();
+        // $contact->fill($validatedDataAtPatch)->save(); // TO DO : patchなのにfill()で良いのか検討
+        return redirect()->route('contact.show', ['contact' => $contactId])->with('succeed', '問合せをクローズしました。');
     }
 }

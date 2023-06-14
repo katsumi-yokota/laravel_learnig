@@ -11,6 +11,16 @@
 <body>
   <div class="container">
     <table class="table table-striped table-bordered">
+      <tr>
+        <th>状態  </th>
+        <td>
+        @if ($contact->is_closed)
+          クローズド
+        @else
+          オープン
+        @endif
+        </td>
+    </tr>
       <tr><th>お問い合わせID  </th><td>{{ $contact->id }}</td></tr>
       <tr><th>カテゴリー名  </th><td>{{ $contact->contactCategory->name }}</td></tr>
       <tr><th>タイトル  </th><td>{{ $contact->title }}</td></tr>
@@ -36,6 +46,9 @@
       <tr>
         <th>レスポンス</th>
         <td>
+        @if ($contact->is_closed)
+          クローズしているのでレスポンスできません。
+        @else
           <form method="post" action="{{ route('contact-response.store', $contact->id) }}">
             @csrf
             <div class="form-group">
@@ -44,6 +57,7 @@
             </div>
             <button type="submit" class="btn btn-success mt-3">送信する</button>
           </form>
+        @endif
         </td>
       </tr>
     </table>
@@ -65,12 +79,12 @@
             <td>@if ($contactResponse->user) {{ $contactResponse->user->name }} @endif</td>
             <td>{{ $contactResponse->created_at }}</td>
             <td>
-            @if ($isSameUser)
+            @if ($isSameUser && !$contact->is_closed)
               <a href="{{ route('contact-response.edit', ['contact' => $contactResponse->contact_id, 'contact_response' => $contactResponse->id]) }}" class="btn btn-primary">編集</a>
             @endif
             </td>
             <td>
-            @if ($isSameUser) 
+            @if ($isSameUser && !$contact->is_closed) 
               <form method="post" action="{{ route('contact-response.destroy', ['contact' => $contactResponse->contact_id, 'contact_response' => $contactResponse->id]) }}">
                 @csrf
                 @method('delete')
@@ -82,6 +96,11 @@
         @endforeach
       </tbody>
     </table>
+    <form action="{{ route('contact.patch', ['contact' => $contact->id, 'contact_response' => $contact->id, 'status' => App\Models\Contact::CLOSED]) }}" method="post">
+      @method('patch')
+      @csrf
+      <input type="submit" value="お問い合わせをクローズする">
+    </form>
   </div>
 </body>
 </html>

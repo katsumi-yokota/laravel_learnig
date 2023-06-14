@@ -11,6 +11,10 @@ class Contact extends Model
     use HasFactory;
     use Sortable;
 
+    // 定数
+    const CLOSED = 1;
+    const OPEN = 0;
+
     protected $fillable =
     [
         'contact_category_id',
@@ -34,10 +38,14 @@ class Contact extends Model
     ];
 
     // アクセサ
-    protected function getStorageFilePathAttribute(): String
+    protected function getStorageFilePathAttribute()
     {
-        $fileName = $this->file_name;
-        return storage_path("app/public/contact/$fileName");
+        return storage_path("app/public/contact/$this->file_name");
+    }
+
+    public function getIsClosedAttribute()
+    {
+        return $this->status === self::CLOSED;
     }
 
     // リレーション

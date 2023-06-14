@@ -33,6 +33,7 @@ Route::group(['middleware' => 'auth'], function()
     Route::post('contact/{contact}/contact-response','App\Http\Controllers\ContactResponseController@store')->name('contact-response.store');
     Route::get('contact/{contact}/contact-response/{contact_response}/edit','App\Http\Controllers\ContactResponseController@edit')->name('contact-response.edit');
     Route::put('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@update')->name('contact-response.update');
+    Route::patch('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@patch')->name('contact.patch');
     Route::delete('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@destroy')->name('contact-response.destroy');
 });
 
