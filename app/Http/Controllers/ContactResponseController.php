@@ -71,7 +71,7 @@ class ContactResponseController extends Controller
             ->where('id', $contactResponseId)
             ->where('user_id', Auth::id())
             ->firstOrFail();
-        $contactResponse->fill($validatedDataAtUpdate)->save(); // TO DO : fill()を使わない方法の検討
+        $contactResponse->fill($validatedDataAtUpdate)->save();
         return redirect()->route('contact.show', ['contact' => $contactId])->with('succeed', '編集に成功しました。');
     }
 
