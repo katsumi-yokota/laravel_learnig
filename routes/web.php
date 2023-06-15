@@ -40,6 +40,9 @@ Route::group(['middleware' => 'auth'], function()
 // お問合せフォームのカテゴリー
 Route::resource('/contact-category', 'App\Http\Controllers\ContactCategoryController')->middleware('auth');
 
+// お問合せフォームのタグ
+Route::resource('/contact-tag', 'App\Http\Controllers\ContactTagController')->middleware('auth');
+
 // つぶやき
 Route::resource('/post','App\Http\Controllers\PostController'); 
 

@@ -24,12 +24,10 @@
             <form method="post" action="{{  route('contact.store')  }}" enctype="multipart/form-data">
             @csrf
                 <div class="form-group">
-                    <label for="contact_category_id">お問合せカテゴリー</label>
-                    <select name="contact_category_id" id="contact_category_id" class="form-control" value="{{  old('name')  }}">
-                        @foreach ($contactCategories as $contactCategory)
-                            <option value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
-                        @endforeach
-                    </select>
+                    @foreach ($contactTags as $contactTag)
+                        <label for="tag_{{ $contactTag->id }}">{{ $contactTag->contact_tag }}</label>
+                        <input type="checkbox" id="tag_{{ $contactTag->id }}" name="tag_{{ $contactTag->id }}">
+                    @endforeach
                 </div>
                 <div class="form-group  mt-3">
                     <label for="title">件名</label>

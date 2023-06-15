@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Contact; 
 use App\Models\ContactCategory;
+use App\Models\ContactTag;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
@@ -47,7 +48,9 @@ class ContactController extends Controller
     {
         // お問合せフォームにカテゴリーを表示
         $contactCategories = ContactCategory::all();
-        return view('contact.create', ['contactCategories' => $contactCategories]);
+        $contactTags = ContactTag::all();
+        // dd($contactTags);
+        return view('contact.create', ['contactCategories' => $contactCategories, 'contactTags' => $contactTags]);
     }
 
     public function store(StoreRequest $request)
