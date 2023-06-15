@@ -6,7 +6,6 @@ use Illuminate\Http\Request;
 use App\Models\Contact; 
 use App\Models\ContactCategory;
 use App\Models\ContactTag;
-use App\Models\ContactContactTag;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
@@ -69,11 +68,11 @@ class ContactController extends Controller
         }
         $inputs['status'] = Contact::OPEN;
         Contact::create($inputs);
-
         Contact::latest()->first()->contactTags()->sync($storeRequest->contact_tag_id);
 
         Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
         Mail::to($inputs['email'])->send(new ContactForm($inputs));
+
         return back()->with('succeed','保存に成功しました。メールをご確認ください。');
     }
 
