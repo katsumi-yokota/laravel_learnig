@@ -60,7 +60,8 @@ class Contact extends Model
         return $this->hasMany('App\Models\ContactResponse');
     }
 
-    public function contactTags() {
+    public function contactTags() 
+    {
         return $this->belongsToMany(ContactTag::class);
     }
 }

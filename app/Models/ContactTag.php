@@ -14,7 +14,8 @@ class ContactTag extends Model
     ];
 
     // リレーション
-    public function contacts() {
+    public function contacts() 
+    {
         return $this->belongsToMany(Contact::class);
     }
 }
