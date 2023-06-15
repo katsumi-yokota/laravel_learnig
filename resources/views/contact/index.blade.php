@@ -22,6 +22,7 @@
   <table class="table table-striped table-bordered">
     <thead>
       <tr>
+        <th>状態</th>
         <th>@sortablelink('contactCategory.name', 'カテゴリー名')</th>
         <th>@sortablelink('title', 'タイトル')</th>
         <th>@sortablelink('name', '名前')</th>
@@ -35,6 +36,13 @@
     <tbody>
       @foreach ($contacts as $contact)
         <tr>
+          <td>
+          @if ($contact->is_closed)
+            クローズド
+          @else
+            オープン
+          @endif
+          </td>
         @if (isset($contact->contactCategory->name))
           <td>{{ $contact->contactCategory->name }}</td>
         @else
