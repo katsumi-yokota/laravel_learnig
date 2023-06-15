@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\Contact; 
 use App\Models\ContactCategory;
 use App\Models\ContactTag;
+use App\Models\ContactContactTag;
 
 use Illuminate\Support\Facades\Mail;
 use App\Mail\ContactForm;
@@ -52,10 +53,10 @@ class ContactController extends Controller
         return view('contact.create', ['contactCategories' => $contactCategories, 'contactTags' => $contactTags]);
     }
 
-    public function store(StoreRequest $request)
+    public function store(StoreRequest $storeRequest)
     {
-        $inputs = $request->validated();
-        $uploadedFile = $request->file('file');
+        $inputs = $storeRequest->validated();
+        $uploadedFile = $storeRequest->file('file');
         if (isset($uploadedFile))
         {
             $movedFile = $uploadedFile->store('protected/contact');
@@ -66,7 +67,12 @@ class ContactController extends Controller
             $inputs['file_name'] = $uploadedFile->getClientOriginalName();
             $inputs['file_path'] = storage_path("app/$movedFile");
         }
+        $inputs['status'] = Contact::OPEN;
         Contact::create($inputs);
+
+        $contactContactTagInput = Contact::latest()->first();
+        $contactContactTagInput->contactTags()->sync($storeRequest->contact_tag_id);
+
         Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
         Mail::to($inputs['email'])->send(new ContactForm($inputs));
         return back()->with('succeed','保存に成功しました。メールをご確認ください。');

@@ -25,8 +25,8 @@
             @csrf
                 <div class="form-group">
                     @foreach ($contactTags as $contactTag)
-                        <label for="tag_{{ $contactTag->id }}">{{ $contactTag->contact_tag }}</label>
-                        <input type="checkbox" id="tag_{{ $contactTag->id }}" name="tag_{{ $contactTag->id }}">
+                        <label for="contact_tag_{{ $contactTag->id }}">{{ $contactTag->contact_tag }}</label>
+                        <input type="checkbox" id="contact_tag_{{ $contactTag->id }}" name="contact_tag_id" value="{{ $contactTag->id }}">
                     @endforeach
                 </div>
                 <div class="form-group  mt-3">

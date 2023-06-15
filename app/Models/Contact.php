@@ -17,7 +17,7 @@ class Contact extends Model
 
     protected $fillable =
     [
-        'contact_category_id',
+        'contact_tag_id',
         'title',
         'name',
         'email',
@@ -25,6 +25,7 @@ class Contact extends Model
         'file_name',
         'file_path',
         'name',
+        'status',
     ];
     public $sortable =
     [
@@ -60,6 +61,7 @@ class Contact extends Model
     }
 
     public function contactTags() {
-        return $this->belongsToMany('App\Models\ContactTag');
+        return $this->belongsToMany(ContactTag::class);
+        // return $this->belongsToMany('App\Models\ContactTag', 'contact_tags', 'id', 'contact_tag_id');
     }
 }

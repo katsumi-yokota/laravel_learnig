@@ -15,6 +15,7 @@ class ContactTag extends Model
 
     // リレーション
     public function contacts() {
-        return $this->belongsToMany('App\Models\Contact');
+        return $this->belongsToMany(Contact::class);
+        // return $this->belongsToMany('App\Models\Contact');
     }
 }
