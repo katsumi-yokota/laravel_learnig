@@ -49,7 +49,6 @@ class ContactController extends Controller
         // お問合せフォームにカテゴリーを表示
         $contactCategories = ContactCategory::all();
         $contactTags = ContactTag::all();
-        // dd($contactTags);
         return view('contact.create', ['contactCategories' => $contactCategories, 'contactTags' => $contactTags]);
     }
 
