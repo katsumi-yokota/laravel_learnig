@@ -70,8 +70,7 @@ class ContactController extends Controller
         $inputs['status'] = Contact::OPEN;
         Contact::create($inputs);
 
-        $contactTagInput = Contact::latest()->first();
-        $contactTagInput->contactTags()->sync($storeRequest->contact_tag_id);
+        Contact::latest()->first()->contactTags()->sync($storeRequest->contact_tag_id);
 
         Mail::to(config('mail.admin'))->send(new ContactForm($inputs));
         Mail::to($inputs['email'])->send(new ContactForm($inputs));
