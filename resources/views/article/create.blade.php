@@ -14,7 +14,7 @@
             <textarea name="body" class="form-control" cols=”100″ rows="25"
             id="body" placeholder="内容"></textarea>
           </div>
-          <button name="title" type="submit" class="btn btn-light mt-3" onClick="return confirm('本当に投稿しますか？');">投稿</button>
+          <button type="submit" class="btn btn-light mt-3" onClick="return confirm('本当に投稿しますか？');">投稿</button>
       </form>
     </div>
   </div>
