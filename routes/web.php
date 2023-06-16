@@ -54,6 +54,9 @@ Route::patch('/user/restore/{trashed_user}', 'App\Http\Controllers\UserControlle
 // ブログ
 Route::resource('/article', 'App\Http\Controllers\ArticleController');
 
+// 掲示板
+Route::resource('/forum', 'App\Http\Controllers\ForumController');
+
 Route::get('/dashboard', function () 
 {
     return view('dashboard');
