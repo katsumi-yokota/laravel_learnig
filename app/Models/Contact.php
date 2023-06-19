@@ -62,6 +62,7 @@ class Contact extends Model
 
     public function contactTags() 
     {
+        // return $this->belongsToMany('App\Models\ContactTag')->withPivot('contact_tag');
         return $this->belongsToMany(ContactTag::class);
     }
 }

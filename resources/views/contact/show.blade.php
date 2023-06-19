@@ -22,7 +22,17 @@
         </td>
     </tr>
       <tr><th>お問い合わせID  </th><td>{{ $contact->id }}</td></tr>
-      {{-- <tr><th>カテゴリー名  </th><td>{{ $contact->contactCategory->name }}</td></tr> --}}
+      <tr>
+        <th>タグ名</th>
+        <td>
+        @php
+          $contactTagCount = $contact->contactTags->count();
+        @endphp
+        @foreach ($contact->contactTags as $i => $contactTag)
+          {{ $contactTag->name }}{{ $i < $contactTagCount - 1 ? ',' : '' }}
+        @endforeach
+        </td>
+      </tr>
       <tr><th>タイトル  </th><td>{{ $contact->title }}</td></tr>
       <tr><th>お名前  </th><td>{{ $contact->name }}</td></tr>
       <tr><th>本文  </th><td>{{ $contact->body }}</td></tr>

@@ -12,8 +12,8 @@
   <input type="text" name="keyword" id="keyword" class="form-control" placeholder="タイトルまたは名前を入力してください。" value="@if(isset($keyword)){{ $keyword }}@endif">
   <select name="contact_category_id" id="contact_category_id" class="form-control" value="">
     <option value="">全て</option>
-    @foreach ($contactCategories as $contactCategory)
-      <option @if($contactCategory->id == $selectedContactCategoryID) selected @endif value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
+    @foreach ($contactTags as $contactTag)
+      <option value="{{ $contactTag->name }}">{{ $contactTag->name }}</option>
     @endforeach
   </select>
   <button type="submit" class="form-control btn btn-success">検索</button>
@@ -23,7 +23,7 @@
     <thead>
       <tr>
         <th>状態</th>
-        <th>@sortablelink('contactCategory.name', 'カテゴリー名')</th>
+        <th>タグ名</th>
         <th>@sortablelink('title', 'タイトル')</th>
         <th>@sortablelink('name', '名前')</th>
         <th>@sortablelink('body', '内容')</th>
@@ -43,11 +43,14 @@
             オープン
           @endif
           </td>
-        @if (isset($contact->contactCategory->name))
-          <td>{{ $contact->contactCategory->name }}</td>
-        @else
-          <td></td>
-        @endif
+          <td>
+            @php
+              $contactTagCount = $contact->contactTags->count();
+            @endphp
+            @foreach ($contact->contactTags as $i => $contactTag)
+              {{ $contactTag->name }}{{ $i < $contactTagCount - 1 ? ',' : '' }} 
+            @endforeach
+          </td>
           <td>{{ $contact->title }}</td>
           <td>{{ $contact->name }}</td>
           <td>{!! nl2br(e($contact->body)) !!}</td>

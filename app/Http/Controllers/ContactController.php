@@ -39,17 +39,16 @@ class ContactController extends Controller
 
         $contacts = $contactsQuery->paginate(20);
 
-        $contactCategories = ContactCategory::all();
+        $contactTags = ContactTag::all();
         
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'selectedContactCategoryID' => $selectedContactCategoryID, 'keyword' => $keyword]);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactTags' => $contactTags, 'selectedContactCategoryID' => $selectedContactCategoryID, 'keyword' => $keyword]);
     }
 
     public function create()
     {
-        // お問合せフォームにカテゴリーを表示
-        $contactCategories = ContactCategory::all();
+        // お問合せフォームにタグを表示
         $contactTags = ContactTag::all();
-        return view('contact.create', ['contactCategories' => $contactCategories, 'contactTags' => $contactTags]);
+        return view('contact.create', ['contactTags' => $contactTags]);
     }
 
     public function store(StoreRequest $storeRequest)
