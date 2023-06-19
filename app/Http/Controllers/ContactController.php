@@ -23,10 +23,22 @@ class ContactController extends Controller
         $contactsQuery = Contact::sortable();
 
         // 絞り込み
-        $selectedContactCategoryID = $request->input('contact_category_id');
-        if (!empty($selectedContactCategoryID))
+        $selectedContactCategoryId = (int)$request->input('contact_category_id');
+        if (!empty($selectedContactCategoryId))
         {
-            $contactsQuery->where('contact_category_id', $selectedContactCategoryID);
+            $contactsQuery->where('contact_category_id', $selectedContactCategoryId);
+        }
+
+        $selectedContactTagId = 0;
+        if (!empty($request->input('contact_tag_id')))
+        {
+            $selectedContactTagId = (int)$request->input('contact_tag_id');
+            $contactsQuery->whereIn('id', function($query) use($selectedContactTagId)
+            {
+                $query->select('contact_id')
+                    ->from('contact_contact_tag')
+                    ->where('contact_tag_id', $selectedContactTagId);
+            });
         }
 
         // 検索
@@ -39,9 +51,10 @@ class ContactController extends Controller
 
         $contacts = $contactsQuery->paginate(20);
 
+        $contactCategories = ContactCategory::all();
         $contactTags = ContactTag::all();
         
-        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactTags' => $contactTags, 'selectedContactCategoryID' => $selectedContactCategoryID, 'keyword' => $keyword]);
+        return view('contact.index', ['contacts' => $contacts, 'sort' => $sort, 'contactCategories' => $contactCategories, 'contactTags' => $contactTags, 'selectedContactCategoryId' => $selectedContactCategoryId, 'selectedContactTagId' => $selectedContactTagId,'keyword' => $keyword]);
     }
 
     public function create()

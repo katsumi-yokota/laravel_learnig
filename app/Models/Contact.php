@@ -17,6 +17,7 @@ class Contact extends Model
 
     protected $fillable =
     [
+        'contact_category_id',
         'contact_tag_id',
         'title',
         'name',
@@ -35,7 +36,6 @@ class Contact extends Model
         'body',
         'file_name',
         'file_path',
-        'name',
     ];
 
     // アクセサ
@@ -62,7 +62,6 @@ class Contact extends Model
 
     public function contactTags() 
     {
-        // return $this->belongsToMany('App\Models\ContactTag')->withPivot('contact_tag');
         return $this->belongsToMany(ContactTag::class);
     }
 }

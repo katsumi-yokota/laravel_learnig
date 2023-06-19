@@ -11,9 +11,15 @@
   <form action="" method="get">
   <input type="text" name="keyword" id="keyword" class="form-control" placeholder="タイトルまたは名前を入力してください。" value="@if(isset($keyword)){{ $keyword }}@endif">
   <select name="contact_category_id" id="contact_category_id" class="form-control" value="">
-    <option value="">全て</option>
+    <option value="0">全カテゴリー</option>
+    @foreach ($contactCategories as $contactCategory)
+      <option @if ($contactCategory->id === $selectedContactCategoryId) selected @endif value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
+    @endforeach
+  </select>
+  <select name="contact_tag_id" id="contact_tag_id" class="form-control" value="">
+    <option value="">全タグ</option>
     @foreach ($contactTags as $contactTag)
-      <option value="{{ $contactTag->name }}">{{ $contactTag->name }}</option>
+      <option @if ($contactTag->id === $selectedContactTagId) selected @endif value="{{ $contactTag->id }}">{{ $contactTag->name }}</option>
     @endforeach
   </select>
   <button type="submit" class="form-control btn btn-success">検索</button>
@@ -23,6 +29,7 @@
     <thead>
       <tr>
         <th>状態</th>
+        <th>@sortablelink('contactCategory.name', 'カテゴリー名')</th>
         <th>タグ名</th>
         <th>@sortablelink('title', 'タイトル')</th>
         <th>@sortablelink('name', '名前')</th>
@@ -43,6 +50,7 @@
             オープン
           @endif
           </td>
+          <td>{{ $contact->contactCategory->name ?? 'カテゴリーなし' }}</td>  
           <td>
             @php
               $contactTagCount = $contact->contactTags->count();
