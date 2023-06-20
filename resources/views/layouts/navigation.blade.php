@@ -26,6 +26,11 @@
                         {{ __('コンタクトカテゴリー管理') }}
                     </x-nav-link>
                 </div>
+                <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    <x-nav-link :href="route('contact-tag.index')" :active="request()->routeIs('contact-tag.index')">
+                        {{ __('コンタクトタグ管理') }}
+                    </x-nav-link>
+                </div>
             </div>
 
             <!-- Settings Dropdown -->

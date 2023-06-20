@@ -51,7 +51,8 @@
           @endif
           </td>
           <td>
-            <a href="{{ route('contact.index', ['contact_category_id' => $contact->contactCategory->id]) }}">{{ $contact->contactCategory->name ?? 'カテゴリーなし' }}</a>
+            {{-- <a href="{{ route('contact.index', ['contact_category_id' => $contact->contactCategory->id]) }}"> --}}
+              {{ $contact->contactCategory->name ?? 'カテゴリーなし' }}</a>
           </td>  
           <td>
             @php
