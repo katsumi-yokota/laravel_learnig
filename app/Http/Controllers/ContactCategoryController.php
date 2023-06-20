@@ -12,8 +12,7 @@ class ContactCategoryController extends Controller
      */
     public function index()
     {
-
-        $contactCategories = ContactCategory::paginate(10);
+        $contactCategories = ContactCategory::withCount('contacts')->paginate(10); // カテゴリーに属する問い合わせ数を取得
         return view('contact-category.index', ['contactCategories' => $contactCategories]);
     }
 
