@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\ContactTag; 
 
 use App\Http\Requests\ContactTag\StoreRequest;
+use App\Http\Requests\ContactTag\UpdateRequest;
 
 class ContactTagController extends Controller
 {
@@ -41,7 +42,8 @@ class ContactTagController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $contactTag = ContactTag::find($id);
+        return view('contact-tag.show', ['contact_tag_id' => $id, 'contactTag' => $contactTag]);
     }
 
     /**
@@ -49,15 +51,17 @@ class ContactTagController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $contactTag = ContactTag::find($id);
+        return view('contact-tag.edit',['contact_tag_id' => $id, 'contactTag' => $contactTag]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $updateRequest, ContactTag $contactTag)
     {
-        //
+        $contactTag->fill($updateRequest->validated())->save();
+        return redirect()->route('contact-tag.index')->with('succeed', '編集しました。');
     }
 
     /**
@@ -65,6 +69,7 @@ class ContactTagController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        ContactTag::find($id)->delete();
+        return redirect()->route('contact-tag.index')->with('warning', '削除しました。');
     }
 }

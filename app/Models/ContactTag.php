@@ -10,7 +10,7 @@ class ContactTag extends Model
     use HasFactory;
 
     protected $fillable = [
-        'contact_tag',
+        'name',
     ];
 
     // リレーション
