@@ -24,6 +24,7 @@ class StoreRequest extends FormRequest
         return 
         [       
             'contact_category_id' => [
+                'required',
             ],
             'title' => [
                 'required',

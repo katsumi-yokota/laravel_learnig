@@ -15,6 +15,7 @@
     <thead>
       <tr>
         <th>カテゴリー名</th>
+        <th>お問い合わせ数</th>
         <th>詳細</th>
         <th>編集</th>
         <th>削除</th>
@@ -24,6 +25,7 @@
       @foreach ($contactCategories as $contactCategory)
       <tr>
         <td>{{ $contactCategory->name }}</td>
+        <td>{{ $contactCategory->contacts->count() }}</td>
         <td><a href="{{ route('contact-category.show', $contactCategory->id) }}">詳細</a></td>
         <td><a href="{{ route('contact-category.edit', $contactCategory->id) }}">編集</a></td>
         <td>

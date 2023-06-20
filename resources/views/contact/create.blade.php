@@ -24,6 +24,13 @@
             <form method="post" action="{{  route('contact.store')  }}" enctype="multipart/form-data">
             @csrf
                 <div class="form-group">
+                    <select name="contact_category_id" class="my-3">
+                    @foreach ($contactCategories as $contactCategory)
+                        <option value="{{ $contactCategory->id }}">{{ $contactCategory->name }}</option>
+                    @endforeach
+                    </select>
+                </div>
+                <div class="form-group">
                     @foreach ($contactTags as $contactTag)
                         <label for="contact_tag_{{ $contactTag->id }}">{{ $contactTag->name }}</label>
                         <input type="checkbox" id="contact_tag_{{ $contactTag->id }}" name="contact_tag_id[]" value="{{ $contactTag->id }}">

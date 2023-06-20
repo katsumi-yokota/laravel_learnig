@@ -13,7 +13,7 @@ class ContactCategoryController extends Controller
     public function index()
     {
 
-        $contactCategories = ContactCategory::paginate(3);
+        $contactCategories = ContactCategory::paginate(10);
         return view('contact-category.index', ['contactCategories' => $contactCategories]);
     }
 

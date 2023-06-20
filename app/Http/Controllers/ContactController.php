@@ -14,6 +14,7 @@ use App\Http\Requests\Contact\StoreRequest;
 
 use Illuminate\Support\Facades\File;
 use Kyslik\ColumnSortable\SortableLink;
+use Symfony\Component\Console\Input\Input;
 
 class ContactController extends Controller
 {
@@ -61,7 +62,8 @@ class ContactController extends Controller
     {
         // お問合せフォームにタグを表示
         $contactTags = ContactTag::all();
-        return view('contact.create', ['contactTags' => $contactTags]);
+        $contactCategories = ContactCategory::all();
+        return view('contact.create', ['contactTags' => $contactTags, 'contactCategories' => $contactCategories]);
     }
 
     public function store(StoreRequest $storeRequest)
