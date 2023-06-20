@@ -51,14 +51,16 @@
           @endif
           </td>
           <td>
-            <a href="{{ route('contact.index', ['contact_category_id' => $contact->contactCategory->id]) }}">{{ $contact->contactCategory->name ?? 'カテゴリーなし' }}</a>
+          @if (isset($contact->contactCategory))
+            <a href="{{ route('contact.index', ['contact_category_id' => $contact->contactCategory->id]) }}">{{ $contact->contactCategory->name }}</a>
+          @endif
           </td>  
           <td>
             @php
               $contactTagCount = $contact->contactTags->count();
             @endphp
             @foreach ($contact->contactTags as $i => $contactTag)
-              <a href="{{ route('contact.index', ['contact_tag_id' => $contactTag->id]) }}">{{ $contactTag->name }}</a> {{ $i < $contactTagCount - 1 ? ',' : '' }} 
+              <a href="{{ route('contact.index', ['contact_tag_id' => $contactTag->id]) }}">{{ $contactTag->name }}</a>{{ $i < $contactTagCount - 1 ? ',' : '' }} 
             @endforeach
           </td>
           <td>{{ $contact->title }}</td>
