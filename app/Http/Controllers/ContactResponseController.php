@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Contact;
 use App\Models\ContactResponse;
-use App\Models\User;
 use Illuminate\Support\Facades\Auth;
-use App\Http\Controllers\withTrashed;
 
 use App\Http\Requests\ContactResponse\StoreRequest;
 use App\Http\Requests\ContactResponse\UpdateRequest;
@@ -94,7 +92,6 @@ class ContactResponseController extends Controller
         $contact = Contact::find($contactId);
         $contact['status'] = $validatedDataAtPatch;
         $contact->save();
-        // $contact->fill($validatedDataAtPatch)->save(); // TO DO : patchなのにfill()で良いのか検討
         return redirect()->route('contact.show', ['contact' => $contactId])->with('succeed', '問合せをクローズしました。');
     }
 }
