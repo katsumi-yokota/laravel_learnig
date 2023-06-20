@@ -13,6 +13,7 @@
     <thead>
       <tr>
         <th>タグ名</th>
+        <th>お問い合わせ数</th>
         <th>詳細</th>
         <th>編集</th>
         <th>削除</th>
@@ -22,6 +23,7 @@
       @foreach ($contactTags as $contactTag)
       <tr>
         <td>{{ $contactTag->name }}</td>
+        <td>{{ $contactTag->contacts->count() }}</td>
         <td><a href="{{ route('contact-tag.show', $contactTag->id) }}">詳細</a></td>
         <td><a href="{{ route('contact-tag.edit', $contactTag->id) }}">編集</a></td>
         <td>
