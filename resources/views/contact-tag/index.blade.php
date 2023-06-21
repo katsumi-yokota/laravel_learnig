@@ -23,7 +23,7 @@
       @foreach ($contactTags as $contactTag)
       <tr>
         <td>{{ $contactTag->name }}</td>
-        <td>{{ $contactTag->contacts->count() }}</td>
+        <td>{{ $contactTag->contacts_count }}</td>
         <td><a href="{{ route('contact-tag.show', $contactTag->id) }}">詳細</a></td>
         <td><a href="{{ route('contact-tag.edit', $contactTag->id) }}">編集</a></td>
         <td>

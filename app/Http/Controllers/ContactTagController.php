@@ -15,7 +15,8 @@ class ContactTagController extends Controller
      */
     public function index()
     {
-        $contactTags = contactTag::all();
+        $contactTags = contactTag::withCount('contacts')->get();
+        // dd($contactTags);
         return view('contact-tag.index', ['contactTags' => $contactTags]);
     }
 
