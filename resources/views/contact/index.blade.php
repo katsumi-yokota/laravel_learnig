@@ -88,4 +88,4 @@
   </table>
 </div>
 @endsection
-{{-- {{ $contacts->appends(request()->query())->links() }} --}}
+{{ $contacts->appends(request()->query())->links() }}

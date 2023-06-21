@@ -8,6 +8,7 @@ use App\Models\ContactCategory;
 use App\Models\ContactTag;
 
 use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Gate;
 use App\Mail\ContactForm;
 
 use App\Http\Requests\Contact\StoreRequest;

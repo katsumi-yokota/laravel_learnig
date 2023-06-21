@@ -24,7 +24,6 @@ Route::post('contact','App\Http\Controllers\ContactController@store')->name('con
 
 Route::group(['middleware' => 'auth'], function()
 {
-    Route::get('contact', 'App\Http\Controllers\ContactController@index')->name('contact.index'); 
     Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download');
     Route::get('contact/{contact}/preview', 'App\Http\Controllers\ContactController@preview')->where('contact', '[1-9][0-9]*')->name('contact.preview');
     Route::get('contact/{contact}', 'App\Http\Controllers\ContactController@show')->name('contact.show');
@@ -35,21 +34,25 @@ Route::group(['middleware' => 'auth'], function()
     Route::put('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@update')->name('contact-response.update');
     Route::patch('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@patch')->name('contact.patch');
     Route::delete('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@destroy')->name('contact-response.destroy');
+}); 
+
+// マスター管理者
+Route::group(['middleware' => 'auth', 'can:isAdmin'], function()
+{
+    // ユーザー
+    Route::resource('/user', 'App\Http\Controllers\UserController');
+    Route::get('/user/restore/{trashed_user}', 'App\Http\Controllers\UserController@restore')->name('user.restore');
+    Route::patch('/user/restore/{trashed_user}', 'App\Http\Controllers\UserController@restore')->name('user.restore');
+
+    // カテゴリー
+    Route::resource('/contact-category', 'App\Http\Controllers\ContactCategoryController');
+
+    // タグ
+    Route::resource('/contact-tag', 'App\Http\Controllers\ContactTagController');
 });
-
-// お問合せフォームのカテゴリー
-Route::resource('/contact-category', 'App\Http\Controllers\ContactCategoryController')->middleware('auth');
-
-// お問合せフォームのタグ
-Route::resource('/contact-tag', 'App\Http\Controllers\ContactTagController')->middleware('auth');
 
 // つぶやき
 Route::resource('/post','App\Http\Controllers\PostController'); 
-
-// ユーザー
-Route::resource('/user', 'App\Http\Controllers\UserController');
-Route::get('/user/restore/{trashed_user}', 'App\Http\Controllers\UserController@restore')->name('user.restore'); // 論理削除の復元
-Route::patch('/user/restore/{trashed_user}', 'App\Http\Controllers\UserController@restore')->name('user.restore'); // 論理削除の復元
 
 // ブログ
 Route::resource('/article', 'App\Http\Controllers\ArticleController');

@@ -17,6 +17,10 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
 
     use Sortable; // ソート
+
+    // 定数
+    const ADMIN = 1;
+
     /**
      * The attributes that are mass assignable.
      *
