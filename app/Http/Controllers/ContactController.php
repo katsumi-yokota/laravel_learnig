@@ -16,6 +16,8 @@ use Illuminate\Support\Facades\File;
 use Kyslik\ColumnSortable\SortableLink;
 use Symfony\Component\Console\Input\Input;
 
+use Illuminate\Support\Facades\DB;
+
 class ContactController extends Controller
 {
     public function index(Request $request)
@@ -50,7 +52,7 @@ class ContactController extends Controller
             $contactsQuery->where('title', 'LIKE', $escapedKeyword)->orWhere('name', 'LIKE', $escapedKeyword);
         }
 
-        $contacts = $contactsQuery->paginate(20);
+        $contacts = $contactsQuery->with(['contactCategory:id,name','contactTags:id,name'])->paginate(20);
 
         $contactCategories = ContactCategory::all();
         $contactTags = ContactTag::all();

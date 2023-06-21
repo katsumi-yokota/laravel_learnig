@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\ContactCategory;
+use App\Models\Contact;
 
 class ContactCategoryController extends Controller
 {
@@ -12,7 +13,7 @@ class ContactCategoryController extends Controller
      */
     public function index()
     {
-        $contactCategories = ContactCategory::withCount('contacts')->paginate(10); // カテゴリーに属する問い合わせ数を取得
+        $contactCategories = ContactCategory::withCount('contacts')->paginate(20);
         return view('contact-category.index', ['contactCategories' => $contactCategories]);
     }
 
