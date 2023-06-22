@@ -84,6 +84,7 @@ class ContactController extends Controller
             $inputs['file_path'] = storage_path("app/$movedFile");
         }
         $inputs['status'] = Contact::OPEN;
+        $inputs['share_status'] = Contact::NOT_GUEST;
         Contact::create($inputs);
         Contact::latest()->first()->contactTags()->sync($storeRequest->contact_tag_id);
 

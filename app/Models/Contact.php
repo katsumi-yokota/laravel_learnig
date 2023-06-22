@@ -15,6 +15,9 @@ class Contact extends Model
     const CLOSED = 1;
     const OPEN = 0;
 
+    const SHARED = 1;
+    const NOTSHARED = 0;
+
     protected $fillable =
     [
         'contact_category_id',

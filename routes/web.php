@@ -24,6 +24,10 @@ Route::post('contact','App\Http\Controllers\ContactController@store')->name('con
 
 Route::group(['middleware' => 'auth'], function()
 {
+    Route::resource('/contact', 'App\Http\Controllers\ContactController');
+    
+    Route::resource('/contact-interaction', 'App\Http\Controllers\GeneralUserContactController');
+
     Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download');
     Route::get('contact/{contact}/preview', 'App\Http\Controllers\ContactController@preview')->where('contact', '[1-9][0-9]*')->name('contact.preview');
     Route::get('contact/{contact}', 'App\Http\Controllers\ContactController@show')->name('contact.show');
