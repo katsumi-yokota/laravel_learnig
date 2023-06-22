@@ -37,7 +37,7 @@ Route::group(['middleware' => 'auth'], function()
 }); 
 
 // マスター管理者
-Route::group(['middleware' => 'auth', 'can:isAdmin'], function()
+Route::group(['middleware' => ['auth', 'can:isAdmin']], function()
 {
     // ユーザー
     Route::resource('/user', 'App\Http\Controllers\UserController');

@@ -3,6 +3,8 @@
 namespace App\Providers;
 
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 use App\Models\User;
 use App\Models\Contact;
 
@@ -24,8 +26,8 @@ class AuthServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        Gate::define('isAdmin', function (User $user) {
-            return $user->privilege === User::ADMIN;
+        Gate::define('isAdmin', function () {
+            return (User::find(Auth::id())->privilege === User::ADMIN);
         });
     }
 }
