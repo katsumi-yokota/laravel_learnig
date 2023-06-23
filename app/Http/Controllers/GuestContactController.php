@@ -4,8 +4,10 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
+use App\Http\Requests\ContactInteraction\StoreRequest;
+
 use App\Models\Contact;
-use App\Models\ContactResponse;
+use App\Models\GuestContact;
 
 class GuestContactController extends Controller
 {
@@ -16,4 +18,13 @@ class GuestContactController extends Controller
             ->findOrFail($id);
         return view('contact-interaction.show', ['contact' => $contact]);
     }
+
+    public function store(StoreRequest $storeRequest, Contact $contact)
+    {
+        $inputs = $storeRequest->validated();
+        $inputs['user_id'] = GuestContact::GUEST;
+        $contact->contactResponses()->create($inputs);
+        return back()->with('succeed', 'レスポンスしました。');
+    }
+
 }

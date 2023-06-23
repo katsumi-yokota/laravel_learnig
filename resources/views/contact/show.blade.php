@@ -73,23 +73,31 @@
       <tr>
         <th>問い合わせ者のレスポンスの可否</th>
         <td>
-          @if ($contact->share_status !== App\Models\Contact::SHARED)
-            <form method="post" action="{{ route('contact-interaction.store',['contactId' => $contact->id]) }}">
-              @csrf
-              <button type="submit" class="btn btn-warning" onClick="return confirm('問い合わせ者がレスポンスできるようにしますか？');">問い合わせ者がレスポンスできるようにする。</button>
-            </form>
+          @if ($contact->status === App\Models\Contact::CLOSED)
+            問い合わせはクローズしているので問い合わせ者はレスポンスできません。
           @else
-            問い合わせ者はレスポンスできます。
+            @if ($contact->share_status !== App\Models\Contact::SHARED)
+              <form method="post" action="{{ route('contact.shareGuest',['contact' => $contact->id]) }}">
+                @csrf
+                <button type="submit" class="btn btn-warning" onClick="return confirm('問い合わせ者がレスポンスできるようにしますか？');">問い合わせ者がレスポンスできるようにする。</button>
+              </form>
+            @else
+              問い合わせ者はレスポンスできます。
+            @endif
           @endif
         </td>
       </tr>
       <tr>
         <th>問い合わせ者用のURL</th>
         <td>
-        @if ($contact->share_status === App\Models\Contact::SHARED)
-            {{ request()->url() . "/contact-interaction/$contact->share_code" }}
-        @else 
-          問い合わせ者にはレスポンス権限がないのでURLは発行されていません。
+        @if ($contact->status === App\Models\Contact::CLOSED)
+          問い合わせはクローズしているので問い合わせ者はURLにアクセスできません。
+        @else
+          @if ($contact->share_status === App\Models\Contact::SHARED)
+              {{ request()->url() . "/contact-interaction/$contact->share_code" }}
+          @else 
+            URLは発行されていません。
+          @endif
         @endif
         </td>
       </tr>

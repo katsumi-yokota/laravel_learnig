@@ -22,18 +22,22 @@ Route::get('/', function () {
 Route::get('contact/create','App\Http\Controllers\ContactController@create')->name('contact.create');
 Route::post('contact','App\Http\Controllers\ContactController@store')->name('contact.store');
 
+// ゲスト用
+Route::get('/contact/{contact}/contact-interaction/{share_code}', 'App\Http\Controllers\GuestContactController@show')->name('contact-interaction.show');
+Route::post('/contact/{contact}/contact-interaction', 'App\Http\Controllers\GuestContactController@store')->name('contact-interaction.store')->middleware('guest:web');
+
 Route::group(['middleware' => 'auth'], function()
 {
     Route::resource('/contact', 'App\Http\Controllers\ContactController');
-    
-    Route::resource('/contact-interaction', 'App\Http\Controllers\GeneralUserContactController');
 
     Route::get('contact/{contact}/download', 'App\Http\Controllers\ContactController@download')->name('contact.download');
     Route::get('contact/{contact}/preview', 'App\Http\Controllers\ContactController@preview')->where('contact', '[1-9][0-9]*')->name('contact.preview');
     Route::get('contact/{contact}', 'App\Http\Controllers\ContactController@show')->name('contact.show');
+    Route::post('contact/{contact}/share-guest','App\Http\Controllers\ContactController@shareGuest')->name('contact.shareGuest');
 
     // 対応履歴
     Route::post('contact/{contact}/contact-response','App\Http\Controllers\ContactResponseController@store')->name('contact-response.store');
+    // Route::post('contact/{contact}/contact-response','App\Http\Controllers\ContactResponseController@store')->name('contact-response.store')->withoutMiddleware(['auth']);
     Route::get('contact/{contact}/contact-response/{contact_response}/edit','App\Http\Controllers\ContactResponseController@edit')->name('contact-response.edit');
     Route::put('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@update')->name('contact-response.update');
     Route::patch('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@patch')->name('contact.patch');

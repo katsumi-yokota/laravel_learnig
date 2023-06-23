@@ -6,9 +6,11 @@ use Illuminate\Http\Request;
 use App\Models\Contact; 
 use App\Models\ContactCategory;
 use App\Models\ContactTag;
+use App\Models\ContactResponse;
 
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Str;
 use App\Mail\ContactForm;
 
 use App\Http\Requests\Contact\StoreRequest;
@@ -84,7 +86,7 @@ class ContactController extends Controller
             $inputs['file_path'] = storage_path("app/$movedFile");
         }
         $inputs['status'] = Contact::OPEN;
-        $inputs['share_status'] = Contact::NOT_GUEST;
+        $inputs['share_status'] = Contact::NOTSHARED;
         Contact::create($inputs);
         Contact::latest()->first()->contactTags()->sync($storeRequest->contact_tag_id);
 
@@ -112,6 +114,7 @@ class ContactController extends Controller
     public function preview($id)
     {
         $contact = Contact::findOrFail($id);
+        $contact->share_status;
         $filePath = $contact->file_path;
 
         if (empty($filePath))
@@ -130,5 +133,28 @@ class ContactController extends Controller
         {
             abort(400);
         }
+    }
+
+    public function shareGuest(Request $request)
+    {
+        $contact = Contact::find($request->contact);
+        $contact->share_status = Contact::SHARED;
+        $contact->share_code = Str::uuid();
+        $contact->save();
+
+        if (!empty(ContactResponse::where('contact_id', $contact->id)->first()))
+        {
+            $contactDetailsUrl = request()->url();
+            Mail::send('contact.url-send-mail',[
+                'email' => "$contactDetailsUrl"
+            ], function($email) use($contact) {
+                $email
+                    ->to($contact);
+            });
+
+            return redirect()->route('contact.show', ['contact' => $contact->id])->with('succeed', 'レスポンス権限を変更して、メールを送りました。');
+        }
+
+        return redirect()->route('contact.show', ['contact' => $contact->id])->with('succeed', 'レスポンス権限を変更しました。');
     }
 }
