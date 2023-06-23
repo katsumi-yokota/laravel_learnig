@@ -39,7 +39,7 @@
           問い合わせはクローズしているので問い合わせ者はURLにアクセスできません。
         @else
           @if ($contact->share_status === App\Models\Contact::SHARED)
-              {{ request()->url() . "/contact-interaction/$contact->share_code" }}
+            {{ request()->url() . "/contact-interaction/$contact->share_code" }}
           @else 
             URLは発行されていません。
           @endif
@@ -47,15 +47,15 @@
         </td>
       </tr>
       <tr>
-        <th>レスポンス</th>
+        <th>返信</th>
         <td>
         @if ($contact->is_closed)
-          クローズしているのでレスポンスできません。
+          クローズしているので返信できません。
         @else
           <form method="post" action="{{ route('contact-interaction.store', $contact->id) }}">
             @csrf
             <div class="form-group">
-              <textarea name="response_content" class="form-control" id="response_content" value="" placeholder="ここにレスポンスを書いてください。">{{ old('response_content') }}</textarea>
+              <textarea name="response_content" class="form-control" id="response_content" value="" placeholder="ここに返信を書いてください。">{{ old('response_content') }}</textarea>
             </div>
             <button type="submit" class="btn btn-success mt-3">送信する</button>
           </form>
@@ -66,9 +66,9 @@
     <table class="table table-striped table-bordered">
       <thead>
         <tr>
-          <th>レスポンス内容</th>
-          <th>レスポンスした者</th>
-          <th>レスポンス日時</th>
+          <th>返信内容</th>
+          <th>返信者</th>
+          <th>返信日時</th>
         </tr>
       </thead>
       <tbody>
@@ -80,7 +80,7 @@
               @if ($contactResponse->user) 
                 {{ $contactResponse->user->name }} 
               @else
-                ※ゲストユーザー様のレスポンスです
+                {{ $contact->name . '様 ※ゲストユーザー様の返信です' }}
               @endif</td>
             <td>{{ $contactResponse->created_at }}</td>
           </tr>
