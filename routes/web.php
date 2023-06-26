@@ -23,7 +23,7 @@ Route::get('contact/create','App\Http\Controllers\ContactController@create')->na
 Route::post('contact','App\Http\Controllers\ContactController@store')->name('contact.store');
 
 // ゲスト用
-Route::get('/contact/{contact}/contact-interaction/{share_code}', 'App\Http\Controllers\GuestContactController@show')->name('contact-interaction.show');
+Route::get('contact-interaction/{share_code}', 'App\Http\Controllers\GuestContactController@show')->name('contact-interaction.show');
 Route::post('/contact/{contact}/contact-interaction', 'App\Http\Controllers\GuestContactController@store')->name('contact-interaction.store')->middleware('guest:web');
 
 Route::group(['middleware' => 'auth'], function()

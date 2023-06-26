@@ -39,7 +39,7 @@
           問い合わせはクローズしているので問い合わせ者はURLにアクセスできません。
         @else
           @if ($contact->share_status === App\Models\Contact::SHARED)
-            {{ request()->url() . "/contact-interaction/$contact->share_code" }}
+            {{ route('contact-interaction.show', [$contact->share_code]) }}
           @else 
             URLは発行されていません。
           @endif
@@ -73,14 +73,16 @@
       </thead>
       <tbody>
         @foreach ($contact->contactResponses->sortByDesc('created_at') as $contactResponse)
-          <?php $isSameUser = $contactResponse->user && Auth::id() === $contactResponse->user->id ?>
+          @php
+            $isSameUser = $contactResponse->user && Auth::id() === $contactResponse->user->id
+          @endphp
           <tr>
             <td>{{ $contactResponse->response_content }}</td>
             <td>
               @if ($contactResponse->user) 
                 {{ $contactResponse->user->name }} 
               @else
-                {{ $contact->name . '様 ※ゲストユーザー様の返信です' }}
+                {{ $contact->name }}様 （ゲストユーザー）
               @endif</td>
             <td>{{ $contactResponse->created_at }}</td>
           </tr>
