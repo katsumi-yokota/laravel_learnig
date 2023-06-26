@@ -9,24 +9,22 @@ use App\Http\Requests\ContactInteraction\StoreRequest;
 use App\Models\Contact;
 use App\Models\ContactResponse;
 use App\Models\GuestContact;
+use Illuminate\Support\Facades\DB;
 
 class GuestContactController extends Controller
 {
     public function show($shareCode)
     {
         $contact = Contact::where('share_status', Contact::SHARED)
-        ->where('share_code', $shareCode)
-        ->first();
+            ->where('share_code', $shareCode)
+            ->with([
+                'contactResponses' => function($query) {
+                    $query->orderBy('created_at', 'desc');
+                },
+            ])
+            ->firstOrFail();
 
-        $contact = $contact::with('contactResponses')
-            ->where('id', $contact->id)
-            ->findOrFail(Contact::where('share_code', $shareCode)
-            ->firstOrFail()->id);
-
-        $contactResponses = $contact->contactResponses->sortByDesc('created_at');
-        dd($contactResponses);
-            
-        return view('contact-interaction.show', ['contact' => $contact, 'contactResponses' => $contactResponses]);
+        return view('contact-interaction.show', ['contact' => $contact]);
     }
 
     public function store(StoreRequest $storeRequest, Contact $contact)

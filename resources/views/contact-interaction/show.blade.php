@@ -72,7 +72,7 @@
         </tr>
       </thead>
       <tbody>
-        @foreach ($contactResponses as $contactResponse)
+        @foreach ($contact->contactResponses as $contactResponse)
           @php
             $isSameUser = $contactResponse->user && Auth::id() === $contactResponse->user->id
           @endphp
