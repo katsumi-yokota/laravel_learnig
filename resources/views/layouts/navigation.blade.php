@@ -9,10 +9,12 @@
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
-                @include('layouts/parts.navigation-links')
+                @auth
+                    @include('layouts.parts.navigation-links')
+                @endauth
             </div>
 
-            @include('layouts/parts.dropdown-setting')            
+            @include('layouts.parts.dropdown-setting')            
 
             <!-- Hamburger -->
             <div class="-mr-2 flex items-center sm:hidden">
