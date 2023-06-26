@@ -72,7 +72,7 @@
         </tr>
       </thead>
       <tbody>
-        @foreach ($contact->contactResponses->sortByDesc('created_at') as $contactResponse)
+        @foreach ($contactResponses as $contactResponse)
           @php
             $isSameUser = $contactResponse->user && Auth::id() === $contactResponse->user->id
           @endphp

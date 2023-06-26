@@ -10,4 +10,9 @@ class GuestContact extends Model
     use HasFactory;
     
     const GUEST = 0;
+
+    public function contactResponses()
+    {
+        return $this->hasMany('App\Models\ContactResponse');
+    }
 }
