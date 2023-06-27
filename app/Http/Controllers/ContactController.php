@@ -107,7 +107,9 @@ class ContactController extends Controller
 
     public function show($id)
     {
-        $contact = Contact::find($id);
+        $contact = Contact::with(['contactResponses'])
+            ->get()
+            ->find($id);
         return view('contact.show', compact('contact'));
     }
 
