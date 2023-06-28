@@ -4,7 +4,14 @@
       <x-slot name="trigger">
           <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
               @if (Auth::check())
-                  <div>{{ Auth::user()->name }}</div>
+                <div>
+                @if (Auth::user()->department)
+                    {{ Auth::user()->department->name }}
+                @else
+                    部署無所属
+                @endif
+                    {{ Auth::user()->name }}
+                </div>
               @else
                   ゲストユーザー様
               @endif

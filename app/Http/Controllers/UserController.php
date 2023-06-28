@@ -6,6 +6,8 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Requests\User\StoreRequest; // フォームリクエスト store
 use App\Http\Requests\User\UpdateRequest; // フォームリクエスト update
+use App\Models\Department;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // ハッシュ化
 
 class UserController extends Controller
@@ -17,7 +19,7 @@ class UserController extends Controller
     public function index(Request $request)
     {
         $sort = $request->sort;
-        $users = User::query()->sortable()->withTrashed()->paginate(10); // 論理削除されたユーザーも取得、表示
+        $users = User::query()->sortable()->withTrashed()->paginate(20); // 論理削除されたユーザーも取得、表示
         return view('user.index', ['users' => $users, 'sort' => $sort]);
         }
 
@@ -26,7 +28,10 @@ class UserController extends Controller
      */
     public function create()
     {
-        return view('user.create');
+        // $users = User::with('department')
+            // ->get();
+        $departments = Department::all();
+        return view('user.create', ['departments' => $departments]);
     }
 
     /**
@@ -36,6 +41,7 @@ class UserController extends Controller
     {
         $inputs = $request->validated(); // バリデーション済み全データ
         $inputs['password'] = Hash::make($inputs['password']); // ハッシュ化
+        $inputs['privilege'] = User::NOTADMIN;
         User::create($inputs);
 
         return redirect('/user')->with('succeed', '新規登録が完了しました。');
@@ -55,8 +61,11 @@ class UserController extends Controller
      */
     public function edit($id)
     {
-        $user = User::find($id);
-        return view('user.edit', compact('user'));
+        $user = User::findOrFail($id);     
+        $users = User::with(['department'])
+            ->get();
+        $departments = Department::all();
+        return view('user.edit', ['user' => $user, 'users' => $users, 'departments' => $departments]);
     }
 
     /**

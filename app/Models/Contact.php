@@ -30,6 +30,7 @@ class Contact extends Model
         'file_path',
         'name',
         'status',
+        'department',
     ];
     public $sortable =
     [

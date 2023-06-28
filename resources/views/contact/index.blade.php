@@ -33,7 +33,6 @@
         <th>タグ名</th>
         <th>@sortablelink('title', 'タイトル')</th>
         <th>@sortablelink('name', '名前')</th>
-        <th>@sortablelink('body', '内容')</th>
         <th>@sortablelink('created_at', '受付日時')</th>
         <th>@sortablelink('file_name', 'ファイルダウンロード')</th>
         <th>ファイルプレビュー</th>
@@ -65,7 +64,6 @@
           </td>
           <td>{{ $contact->title }}</td>
           <td>{{ $contact->name }}</td>
-          <td>{!! nl2br(e($contact->body)) !!}</td>
           <td>{{ $contact->created_at }}</td>
         @if (!$contact->file_path)
           <td></td>

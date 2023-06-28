@@ -54,7 +54,7 @@
                         <label for="name">名前</label>
                         <input type="text" name="name" class="form-control" id="name" value="{{  old('name')  }}" placeholder="Enter Name">
                     </div>
-                    <div id="contact_body" class=""></div>
+                    <div id="contact_body"></div>
                         <input type="hidden" name="body" value="{{ old('body') }}">
                     <div class="form-group mt-3">
                         <label for="email">メールアドレス</label>

@@ -20,6 +20,7 @@ class User extends Authenticatable
 
     // 定数
     const ADMIN = 1;
+    const NOTADMIN = 0;
 
     /**
      * The attributes that are mass assignable.
@@ -30,6 +31,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'department_id',
+        'privilege',
     ];
 
     // 論理削除
@@ -75,5 +78,10 @@ class User extends Authenticatable
     public function contacts()
     {
         return $this->hasMany('App\Models\Contact');
+    }
+
+    public function department()
+    {
+        return $this->belongsTo('App\Models\Department');
     }
 }

@@ -20,6 +20,16 @@
             @csrf
             @method('put') <!-- update用 -->
                 <div class="form-group">
+                    @php
+                        $departmentId = $user->department->id ?? 0
+                    @endphp
+                    <select name="department_id" id="department_id">
+                        @foreach ($departments as $department)
+                            <option @if ($department->id === $departmentId) selected @endif value="{{ $department->id }}">{{ $department->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="form-group mt-3">
                     <label for="name">ユーザー名</label>
                     <input type="text" name="name" class="form-control" id="name" value="{{ $user->name }}" placeholder="">
                 </div>

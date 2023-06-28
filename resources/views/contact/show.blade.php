@@ -35,7 +35,7 @@
       </tr>
       <tr><th>タイトル  </th><td>{{ $contact->title }}</td></tr>
       <tr><th>お名前  </th><td>{{ $contact->name }}</td></tr>
-      <tr><th>本文  </th><td>{{ $contact->body }}</td></tr>
+      <tr><th>本文  </th><td>{!! $contact->body !!}</td></tr>
       <tr><th>メールアドレス  </th><td>{{ $contact->email }}</td></tr>
       <tr><th>お問い合わせ日時  </th><td>{{ $contact->created_at }}</td></tr>
       <tr><th>更新日時  </th><td>{{ $contact->updated_at }}</td></tr>

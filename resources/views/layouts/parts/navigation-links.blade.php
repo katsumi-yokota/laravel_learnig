@@ -10,6 +10,11 @@
     </x-nav-link>
 </div>
 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+    <x-nav-link :href="route('department.index')" :active="request()->routeIs('department.index')">
+        {{ __('部署管理') }}
+    </x-nav-link>
+</div>
+<div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
     <x-nav-link :href="route('contact-category.index')" :active="request()->routeIs('contact-category.index')">
         {{ __('コンタクトカテゴリー管理') }}
     </x-nav-link>

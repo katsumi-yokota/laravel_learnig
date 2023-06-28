@@ -38,7 +38,11 @@ class StoreRequest extends FormRequest
             'password' => 
             [
                 'required',
-            ] 
+            ],
+            'department_id' =>
+            [
+                'required',
+            ],
         ];
     }
 }

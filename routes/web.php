@@ -37,7 +37,6 @@ Route::group(['middleware' => 'auth'], function()
 
     // 対応履歴
     Route::post('contact/{contact}/contact-response','App\Http\Controllers\ContactResponseController@store')->name('contact-response.store');
-    // Route::post('contact/{contact}/contact-response','App\Http\Controllers\ContactResponseController@store')->name('contact-response.store')->withoutMiddleware(['auth']);
     Route::get('contact/{contact}/contact-response/{contact_response}/edit','App\Http\Controllers\ContactResponseController@edit')->name('contact-response.edit');
     Route::put('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@update')->name('contact-response.update');
     Route::patch('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@patch')->name('contact.patch');
@@ -57,6 +56,9 @@ Route::group(['middleware' => ['auth', 'can:isAdmin']], function()
 
     // タグ
     Route::resource('/contact-tag', 'App\Http\Controllers\ContactTagController');
+
+    // 部署
+    Route::resource('/department', 'App\Http\Controllers\DepartmentController');
 });
 
 // つぶやき
