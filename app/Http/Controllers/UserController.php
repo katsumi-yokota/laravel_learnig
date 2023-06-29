@@ -4,10 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
-use App\Http\Requests\User\StoreRequest; // フォームリクエスト store
-use App\Http\Requests\User\UpdateRequest; // フォームリクエスト update
+use App\Http\Requests\User\StoreRequest;
+use App\Http\Requests\User\UpdateRequest;
+use App\Http\Requests\Department\IndexRequest;
 use App\Models\Department;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash; // ハッシュ化
 
 class UserController extends Controller
@@ -16,11 +16,26 @@ class UserController extends Controller
      * Display a listing of the resource.
      */
 
-    public function index(Request $request)
+    public function index(IndexRequest $indexRequest)
     {
-        $sort = $request->sort;
-        $users = User::query()->sortable()->withTrashed()->paginate(20); // 論理削除されたユーザーも取得、表示
-        return view('user.index', ['users' => $users, 'sort' => $sort]);
+        $departmentId = $indexRequest->input('department_id');
+        $users = User::query()->sortable()->withTrashed();
+        $sort = $indexRequest->sort;
+        $departments = Department::all();
+        if (isset($departmentId))
+        {
+            if ($departmentId === 'undefined')
+            {
+                $users->whereNull('department_id');
+            }
+            else
+            {
+                $users->where('department_id', $departmentId);
+            }
+        }
+        $users = $users->paginate(20);
+
+        return view('user.index', ['users' => $users, 'sort' => $sort, 'departments' => $departments, 'departmentId' => $departmentId]);
         }
 
     /**

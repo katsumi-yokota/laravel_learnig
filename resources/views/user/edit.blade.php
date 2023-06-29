@@ -1,49 +1,47 @@
 @extends('layouts.app')
 @section('content')
-@if ($errors->any())
-<div class="alert alert-danger">
-    <ul>
-        @foreach ($errors->all() as $error)
-            <li>{{ $error }}</li>
-        @endforeach
-    </ul>
-</div>
-@endif
-@if(session('message'))
-<div class="alert alert-success">{{ session('message') }}</div>
-@endif
-<div class="row">
-    <div class="col-10 col-md-8 col-lg-6 mx-auto mt-6">
-        <div class="card-body">
-            <h1 class="mt4  mb-3">編集</h1>
-            <form method="post" action="{{ route('user.update', $user->id) }}">
-            @csrf
-            @method('put') <!-- update用 -->
-                <div class="form-group">
-                    @php
-                        $departmentId = $user->department->id ?? 0
-                    @endphp
-                    <select name="department_id" id="department_id">
-                        @foreach ($departments as $department)
-                            <option @if ($department->id === $departmentId) selected @endif value="{{ $department->id }}">{{ $department->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="form-group mt-3">
-                    <label for="name">ユーザー名</label>
-                    <input type="text" name="name" class="form-control" id="name" value="{{ $user->name }}" placeholder="">
-                </div>
-                <div class="form-group mt-3">
-                    <label for="email">メールアドレス</label>
-                    <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}" placeholder="">
-                </div>
-                <div class="form-group mt-3">
-                    <label for="password">パスワード</label>
-                    <input type="password" name="password" class="form-control" id="password" value="" placeholder="">
-                </div>
-                <button type="submit" class="btn btn-success mt-3">編集する</button>
-            </form>
-        </div>
-    </div>
+<div class="container">
+    <h1 class="my-3">ユーザーを編集</h1>
+    <form method="post" action="{{ route('user.update', $user->id) }}">
+        @csrf
+        @method('put')
+    <table class="table table-striped table-bordered">
+        <tr>
+            <th>部署</th>
+            <td>
+            @php
+                $departmentId = $user->department->id ?? NULL
+            @endphp
+            <select name="department_id" id="department_id">
+                <option value="{{ NULL }}">無所属</option>
+                @foreach ($departments as $department)
+                    <option @if ($department->id === $departmentId) selected @endif value="{{ $department->id }}">
+                        {{ $department->name }}
+                    </option>
+                @endforeach
+            </select>
+            </td>
+        </tr>
+        <tr>
+            <th>ユーザー名</th>
+            <td>
+                <input type="text" name="name" class="form-control" id="name" value="{{ $user->name }}" placeholder="">
+            </td>
+        </tr>
+        <tr>
+            <th>メールアドレス</th>
+            <td>
+                <input type="email" name="email" class="form-control" id="email" value="{{ $user->email }}" placeholder="">
+            </td>
+        </tr>
+        <tr>
+            <th>パスワード</th>
+            <td>
+                <input type="password" name="password" class="form-control" id="password" value="" placeholder="">
+            </td>
+        </tr>
+    </table>
+    <button type="submit" class="btn btn-success mt-3">編集する</button>
+    </form>
 </div>
 @endsection

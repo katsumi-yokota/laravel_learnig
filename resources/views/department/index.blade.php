@@ -22,7 +22,7 @@
       <tr>
         <td>{{ $department->name }}</td>
         <td>
-          <a href="{{ route('department.edit', ['department' => $department->id]) }}" class="btn btn-success">変更</a>
+          <a href="{{ route('department.edit', ['department' => $department->id]) }}">変更</a>
         </td>
         <td>
           <form method="post" action="{{ route('department.destroy', ['department' => $department->id]) }}">

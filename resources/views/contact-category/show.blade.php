@@ -18,7 +18,6 @@
         {{ __('編集ページ') }}
       </x-nav-link>
     </div>
-
     <h1 class="my-3">詳細</h1>
     <table class="table table-striped table-bordered">
       <tr><th>ID  </th><td>{{ $contactCategory->id }}</td></tr>
