@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\Department\StoreRequest;
+use App\Http\Requests\Department\UpdateRequest;
 use App\Models\Department;
 use Illuminate\Http\Request;
 
@@ -47,24 +48,32 @@ class DepartmentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit($departmentId)
     {
-        //
+        $department = Department::find($departmentId);
+        
+        return view('department.edit', ['department' => $department]);
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(UpdateRequest $updateRequest, $departmentId)
     {
-        //
+        $department = Department::find($departmentId);
+        $department->name = $updateRequest->name;
+        $department->save();
+
+        return redirect()->route('department.index')->with('succeed', '部署名を変更しました。');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy($departmentId)
     {
-        //
+        Department::find($departmentId)->delete();
+
+        return redirect()->route('department.index')->with('warning', '部署を削除しました。');
     }
 }
