@@ -24,6 +24,7 @@ class IndexRequest extends FormRequest
         return [
             'department_id' => [
                 'regex:/^([0-9]+|undefined)$/',
+                'nullable',
             ],
         ];
     }

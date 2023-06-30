@@ -14,6 +14,7 @@
 
   <form action="" method="get">
     <select name="department_id" id="" class="form-control">
+      <option @if (empty($departmentId)) selected @endif value="">全て表示</option>
       <option @if($departmentId === 'undefined') selected @endif value="undefined">無所属</option>
       @foreach ( $departments as $department )
         <option @if($department->id === (int)$departmentId) selected @endif value="{{ $department->id }}">
