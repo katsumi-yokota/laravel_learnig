@@ -1,9 +1,8 @@
 <?php
 
-namespace App\Http\Requests\User;
+namespace App\Http\Requests\UserProfile;
 
 use Illuminate\Foundation\Http\FormRequest;
-use Illuminate\Validation\Rule; // unique除外用
 
 class UpdateRequest extends FormRequest
 {
@@ -25,21 +24,13 @@ class UpdateRequest extends FormRequest
         return [
             'name' => [
                 'required',
-                'max:32',
             ],
             'email' => [
-                'email',
                 'required',
-                'max:255',
-                Rule::unique('users','email')->ignore($this->user),
             ],
             'password' => [
-                'nullable',
-                'max:32',
                 'confirmed',
             ],
-            'department_id' => [
-            ]
         ];
     }
 }

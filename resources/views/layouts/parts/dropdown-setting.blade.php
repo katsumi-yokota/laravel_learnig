@@ -8,7 +8,7 @@
                 @if (Auth::user()->department)
                     {{ Auth::user()->department->name }}
                 @else
-                    部署無所属
+                    無所属
                 @endif
                     {{ Auth::user()->name }}
                 </div>

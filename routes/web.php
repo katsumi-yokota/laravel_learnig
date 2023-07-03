@@ -41,6 +41,11 @@ Route::group(['middleware' => 'auth'], function()
     Route::put('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@update')->name('contact-response.update');
     Route::patch('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@patch')->name('contact.patch');
     Route::delete('contact/{contact}/contact-response/{contact_response}','App\Http\Controllers\ContactResponseController@destroy')->name('contact-response.destroy');
+
+    // プロファイル
+    Route::get('/profile','App\Http\Controllers\UserProfileController@show')->name('user-profile.show');
+    Route::get('/profile/edit', 'App\Http\Controllers\UserProfileController@edit')->name('user-profile.edit');
+    Route::put('/profile/{profile}', 'App\Http\Controllers\UserProfileController@update')->name('user-profile.update');
 }); 
 
 // マスター管理者

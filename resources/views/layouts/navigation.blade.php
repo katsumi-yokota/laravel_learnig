@@ -10,7 +10,11 @@
                     </a>
                 </div>
                 @auth
+                @if (Auth::user()->privilege === App\Models\User::ADMIN)
                     @include('layouts.parts.navigation-links')
+                @else
+                    @include('layouts.parts.navigation-links-for-notadmin')
+                @endif
                 @endauth
             </div>
 
